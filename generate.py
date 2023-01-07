@@ -23,5 +23,3 @@ for k in range(5):
 
 
 pyrosim.End()
-
-base + height/2
