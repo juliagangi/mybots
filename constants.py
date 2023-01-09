@@ -1,10 +1,5 @@
 import numpy
 
-amplitudeF = numpy.pi/14
-frequencyF = 30
-phaseOffsetF = 0
-
-amplitudeB = numpy.pi/10
-frequencyB = 30
-phaseOffsetB = -numpy.pi/6
-
+amplitude = numpy.pi/8
+frequency = 10
+offset = 0
