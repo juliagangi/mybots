@@ -57,7 +57,6 @@ class NEURAL_NETWORK:
         return self.neurons[neuronName].Get_Value()
 
 
-
 # ---------------- Private methods --------------------------------------
 
     def Add_Neuron_According_To(self,line):
