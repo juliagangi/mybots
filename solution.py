@@ -2,17 +2,27 @@ import numpy
 import pyrosim.pyrosim as pyrosim
 from pyrosim.neuralNetwork import NEURAL_NETWORK
 import os
+import random
 
 
 class SOLUTION:
     def __init__(self):
         self.weights = 2*numpy.random.rand(3,2) - 1
 
-    def Evaluate(self):
+    def Evaluate(self,mode):
         self.Create_World()
         self.Create_Body()
         self.Create_Brain()
-        os.system("python3 simulate.py")
+        string = "python3 simulate.py " + mode
+        os.system(string)
+        fitnessFile = open("fitness.txt", "r")
+        self.fitness = float(fitnessFile.read())
+        fitnessFile.close()
+
+    def Mutate(self):
+        row = random.randint(0,2)
+        col = random.randint(0,1)
+        self.weights[row,col] = 2*random.random() - 1
 
     def Create_World(self):
         pyrosim.Start_SDF("world.sdf")
@@ -33,8 +43,8 @@ class SOLUTION:
         pyrosim.Send_Sensor_Neuron(name = 0 , linkName = "Torso")
         pyrosim.Send_Sensor_Neuron(name = 1 , linkName = "BackLeg")
         pyrosim.Send_Sensor_Neuron(name = 2 , linkName = "FrontLeg")
-        pyrosim.Send_Motor_Neuron( name = 3 , jointName = "Torso_BackLeg")
-        pyrosim.Send_Motor_Neuron( name = 4 , jointName = "Torso_FrontLeg")
+        pyrosim.Send_Motor_Neuron(name = 3 , jointName = "Torso_BackLeg")
+        pyrosim.Send_Motor_Neuron(name = 4 , jointName = "Torso_FrontLeg")
         sensor_neurons = [0,1,2]
         motor_neurons = [0,1]
         for currentRow in sensor_neurons:
