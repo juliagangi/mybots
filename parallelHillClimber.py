@@ -14,7 +14,6 @@ class PARALLEL_HILL_CLIMBER:
             self.nextAvailableID = self.nextAvailableID + 1
 
     def Evolve(self):
-        print("EVALUATING PARENTS")
         self.Evaluate(self.parents)
         for currentGeneration in range(c.numberOfGenerations):
             self.Evolve_For_One_Generation()
@@ -22,7 +21,6 @@ class PARALLEL_HILL_CLIMBER:
     def Evolve_For_One_Generation(self):
         self.Spawn()
         self.Mutate()
-        print("EVALUATING CHILDREN")
         self.Evaluate(self.children)
         self.Print()
         self.Select()        

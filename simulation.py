@@ -28,7 +28,6 @@ class SIMULATION:
                 time.sleep(1/60)
 
     def Get_Fitness(self):
-        print("getting fitness")
         self.robot.Get_Fitness()
 
     def __del__(self):
