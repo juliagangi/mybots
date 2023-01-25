@@ -14,16 +14,12 @@ class SOLUTION:
         self.Create_World()
         self.Create_Body()
         self.Create_Brain()
-        print("simulating:")
-        print(self.myID)
         os.system("python3 simulate.py " + directOrGUI + " " + str(self.myID) + " &")
 
     def Wait_For_Simulation_To_End(self,directOrGUI):
+        while not os.path.exists("fitness" + str(self.myID) + ".txt"):
+            time.sleep(0.3)
         fitnessFileName = "fitness" + str(self.myID) + ".txt"
-        while not os.path.exists(fitnessFileName):
-            time.sleep(0.01)
-        print("waiting to end & read:")
-        print(self.myID)
         fitnessFile = open(fitnessFileName, "r")
         self.fitness = float(fitnessFile.read())
         fitnessFile.close()
