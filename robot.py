@@ -41,11 +41,9 @@ class ROBOT:
         stateOfLinkZero = p.getLinkState(self.robot,0)
         positionOfLinkZero = stateOfLinkZero[0]
         xCoordinateOfLinkZero = positionOfLinkZero[0]
-        print("writing:")
-        print(self.myID)
         fitnessFile = open("tmp" + str(self.myID) + ".txt", "w")
-        fitnessFile.write(str(xCoordinateOfLinkZero))
         os.system("mv tmp" + str(self.myID) + ".txt" " fitness" + str(self.myID) + ".txt")
+        fitnessFile.write(str(xCoordinateOfLinkZero))
         fitnessFile.close()
 
     def Think(self):
