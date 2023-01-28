@@ -1,3 +1,1 @@
-# mybots
-# mybots
-# 396bots
+# Run search.py to watch the evolved creature
