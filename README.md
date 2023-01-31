@@ -9,13 +9,13 @@ First, clone my repo to your computer.
 To watch a random creature, run this command.
 
 ```bash
-python run.py random
+python3 run.py random
 ```
 
 To watch an evolved creature, run this command.
 
 ```bash
-python run.py evolved
+python3 run.py evolved
 ```
 
 ## Videos
