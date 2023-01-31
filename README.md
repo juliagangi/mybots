@@ -6,13 +6,13 @@ My quadruped was trained to jump by selecting for the parent with the longest st
 
 First, clone my repo to your computer.
 
-To watch a random creature, run this command.
+To watch a random creature, run this command (alter python version if needed)
 
 ```bash
 python3 run.py random
 ```
 
-To watch an evolved creature, run this command.
+To watch an evolved creature, run this command (alter python version if needed)
 
 ```bash
 python3 run.py evolved
