@@ -8,10 +8,11 @@ import constants as c
 import numpy
 
 class ROBOT:
-    def __init__(self,solutionID):
+    def __init__(self,solutionID,links):
         self.myID = solutionID
         self.motors = {}
-        self.robot = p.loadURDF("body.urdf")
+        self.links = links
+        self.robot = p.loadURDF("body" + str(self.myID) + ".urdf")
         pyrosim.Prepare_To_Simulate(self.robot)
         self.Prepare_To_Sense()
         self.Prepare_To_Act()
@@ -20,12 +21,14 @@ class ROBOT:
 
     def Prepare_To_Sense(self):
         self.sensors = {}
-        for linkName in pyrosim.linkNamesToIndices:
-            self.sensors[linkName] = SENSOR(linkName)
+        #for linkName in pyrosim.linkNamesToIndices:
+        for link in self.links:
+            if self.links[link][2]:
+                self.sensors[link] = SENSOR(link)
 
     def Sense(self,t):
         for sensor in self.sensors:
-                self.sensors[sensor].Get_Value(t)
+            self.sensors[sensor].Get_Value(t)
 
     def Prepare_To_Act(self):
         self.motors = {}
@@ -38,34 +41,6 @@ class ROBOT:
                 jointName = self.nn.Get_Motor_Neurons_Joint(neuronName)
                 desiredAngle = self.nn.Get_Value_Of(neuronName)*c.motorJointRange
                 self.motors[jointName].Set_Value(self.robot,desiredAngle)
-
-    def Get_Fitness(self):
-        basePositionAndOrientation = p.getBasePositionAndOrientation(self.robot)
-        basePosition = basePositionAndOrientation[0]
-        zPosition = basePosition[2]
-        sensor1Vals = self.sensors["BackLowerLeg"].values
-        sensor2Vals = self.sensors["FrontLowerLeg"].values
-        sensor3Vals = self.sensors["LeftLowerLeg"].values
-        sensor4Vals = self.sensors["RightLowerLeg"].values
-        summedVals = sensor1Vals + sensor2Vals + sensor3Vals + sensor4Vals
-        fitnessArray = []
-        currStretch = 0
-        for i in range(len(summedVals)):
-            if summedVals[i] == -4:
-                currStretch = currStretch + 1
-            if summedVals[i] != -4:
-                if currStretch != 0:
-                    fitnessArray.append(currStretch) 
-                currStretch = 0
-        longestStretch = 0
-        for i in range(len(fitnessArray)):
-            curr = fitnessArray[i]
-            if curr > longestStretch:
-                longestStretch = curr
-        fitnessFile = open("tmp" + str(self.myID) + ".txt", "w")
-        os.system("mv tmp" + str(self.myID) + ".txt" " fitness" + str(self.myID) + ".txt")
-        fitnessFile.write(str(longestStretch+zPosition))
-        fitnessFile.close()
 
     def Think(self):
         self.nn.Update()
