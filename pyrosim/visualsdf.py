@@ -4,7 +4,7 @@ class VISUAL_SDF:
 
     def __init__(self,geometry):
 
-        self.geometry = geometry 
+        self.geometry = geometry
 
         self.depth = 3
 

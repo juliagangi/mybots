@@ -24,6 +24,7 @@ class LINK_SDF:
 
         self.visual    = VISUAL_SDF(self.geometry)
 
+
     def Save(self,f):
 
         self.Save_Start_Tag(f)
