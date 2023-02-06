@@ -4,7 +4,7 @@
 
 First, clone my repo to your computer.
 
-To watch a series of random snakes being generated, run this command:
+To watch a series of random snakes being generated, navigate to the mybots directory and run this command:
 
 ```bash
 python3 simulate.py
