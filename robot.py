@@ -5,7 +5,6 @@ from motor import MOTOR
 from pyrosim.neuralNetwork import NEURAL_NETWORK
 import os
 import constants as c
-import numpy
 
 class ROBOT:
     def __init__(self,solutionID,links):
@@ -21,7 +20,6 @@ class ROBOT:
 
     def Prepare_To_Sense(self):
         self.sensors = {}
-        #for linkName in pyrosim.linkNamesToIndices:
         for link in self.links:
             if self.links[link][2]:
                 self.sensors[link] = SENSOR(link)

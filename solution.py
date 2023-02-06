@@ -1,31 +1,26 @@
 import numpy
 import pyrosim.pyrosim as pyrosim
 from pyrosim.neuralNetwork import NEURAL_NETWORK
-import os
 import random
-import time
 import constants as c
 from simulation import SIMULATION
 
 class SOLUTION:
     def __init__(self,nextAvailableID):
-        self.weights = 2*numpy.random.rand(c.numSensorNeurons,c.numMotorNeurons) - 1
         self.myID = nextAvailableID
-        self.numLinks = random.randint(0,9)
+        self.numLinks = random.randint(2,12)
+        print(self.numLinks)
         self.links = {}
 
     def Start_Simulation(self):
         self.Create_World()
         self.Create_Body()
         self.Create_Brain()
-        #os.system("python3 simulate.py " + str(self.myID))
         simulation = SIMULATION(self.myID,self.links)
         simulation.Run()
-        #os.system("python3 simulate.py " + str(self.myID) + " 2&>1 &")
 
     def Create_World(self):
         pyrosim.Start_SDF("world.sdf")
-        #pyrosim.Send_Cube(name="Box", pos=[-3,3,0.5], size=[1,1,1])
         pyrosim.End()
 
     def Create_Body(self):
@@ -47,8 +42,10 @@ class SOLUTION:
             linkName = "link"+str(link)
             self.links[linkName]=[xPos,xDim,sensor]       
             pyrosim.Send_Cube(name=linkName, pos=[xPos,yPos,zPos], size=[xDim,yDim,zDim], color=mycolor, colorname=mycolorname)
-            if link > 0:
-                pyrosim.Send_Joint(name = "link"+str(link-1)+"_"+linkName, parent= "link"+str(link-1), child = linkName, type = "revolute", position = [self.links["link"+str(link-1)][1],0,0], jointAxis = "1 0 0")
+            if link < self.numLinks-1:
+                pyrosim.Send_Joint(name = linkName+"_link"+str(link+1), parent= linkName, child = "link"+str(link+1), type = "revolute", position = [xDim,0,0], jointAxis = "1 0 0")
+            #if link > 0:
+            #    pyrosim.Send_Joint(name = "link"+str(link-1)+"_"+linkName, parent= "link"+str(link-1), child = linkName, type = "revolute", position = [self.links["link"+str(link-1)][1],0,0], jointAxis = "1 0 0")
         pyrosim.End()
 
     def Create_Brain(self):
