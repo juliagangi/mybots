@@ -8,13 +8,13 @@ My snake grows along the x-axis, at fixed z- and y-coordinates. The number of sn
 
 First, clone my repo to your computer.
 
-To watch a series of random snakes being generated, run simulate.py or run this command:
+To watch a series of random snakes being generated, run snake.py or run this command:
 
 ```bash
-python3 simulate.py
+python3 snake.py
 ```
 
 ## Videos
 
-Click this link to watch snakes generate: <https://youtu.be/Wa-SU3kHa00>
+Click this link to watch snakes generate: <https://youtu.be/3eocEp61D18>
 
