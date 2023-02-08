@@ -45,9 +45,9 @@ class SOLUTION:
             self.links[linkName]=[xPos,xDim,sensor]       
             pyrosim.Send_Cube(name=linkName, pos=[xPos,yPos,zPos], size=[xDim,yDim,zDim], color=mycolor, colorname=mycolorname)
             if link == 1:
-                pyrosim.Send_Joint(name = "link"+str(link-1)+"_"+linkName, parent= "link"+str(link-1), child = linkName, type = "revolute", position = [self.links["link"+str(link-1)][1],0,1], jointAxis = "1 0 0")
+                pyrosim.Send_Joint(name = "link"+str(link-1)+"_"+linkName, parent= "link"+str(link-1), child = linkName, type = "revolute", position = [self.links["link"+str(link-1)][1],0,1], jointAxis = "0 0 1")
             elif link > 1:
-                pyrosim.Send_Joint(name = "link"+str(link-1)+"_"+linkName, parent= "link"+str(link-1), child = linkName, type = "revolute", position = [self.links["link"+str(link-1)][1],0,0], jointAxis = "1 0 0")
+                pyrosim.Send_Joint(name = "link"+str(link-1)+"_"+linkName, parent= "link"+str(link-1), child = linkName, type = "revolute", position = [self.links["link"+str(link-1)][1],0,0], jointAxis = "0 0 1")
         pyrosim.End()
 
     def Create_Brain(self):
