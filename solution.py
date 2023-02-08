@@ -31,7 +31,9 @@ class SOLUTION:
             zDim = numpy.random.rand()*2
             xPos = .5*xDim
             yPos = 0
-            zPos = 1
+            zPos = 0
+            if link == 0:
+                zPos = 1
             sensor = 0
             mycolor = "0 0 255 1"
             mycolorname = "Blue"
@@ -42,10 +44,10 @@ class SOLUTION:
             linkName = "link"+str(link)
             self.links[linkName]=[xPos,xDim,sensor]       
             pyrosim.Send_Cube(name=linkName, pos=[xPos,yPos,zPos], size=[xDim,yDim,zDim], color=mycolor, colorname=mycolorname)
-            if link < self.numLinks-1:
-                pyrosim.Send_Joint(name = linkName+"_link"+str(link+1), parent= linkName, child = "link"+str(link+1), type = "revolute", position = [xDim,0,0], jointAxis = "1 0 0")
-            #if link > 0:
-            #    pyrosim.Send_Joint(name = "link"+str(link-1)+"_"+linkName, parent= "link"+str(link-1), child = linkName, type = "revolute", position = [self.links["link"+str(link-1)][1],0,0], jointAxis = "1 0 0")
+            if link == 1:
+                pyrosim.Send_Joint(name = "link"+str(link-1)+"_"+linkName, parent= "link"+str(link-1), child = linkName, type = "revolute", position = [self.links["link"+str(link-1)][1],0,1], jointAxis = "1 0 0")
+            elif link > 1:
+                pyrosim.Send_Joint(name = "link"+str(link-1)+"_"+linkName, parent= "link"+str(link-1), child = linkName, type = "revolute", position = [self.links["link"+str(link-1)][1],0,0], jointAxis = "1 0 0")
         pyrosim.End()
 
     def Create_Brain(self):
