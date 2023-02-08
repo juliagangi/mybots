@@ -1,4 +1,4 @@
 import numpy
 
 motorJointRange = .2
-numTimeSteps = 100
+numTimeSteps = 40

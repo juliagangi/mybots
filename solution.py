@@ -51,8 +51,20 @@ class SOLUTION:
     def Create_Brain(self):
         pyrosim.Start_NeuralNetwork("brain" + str(self.myID) + ".nndf")
         i = 0
+        linkNum = 0
+        sensors = []
+        motors = []
         for link in self.links:
             if self.links[link][2]:
-                pyrosim.Send_Sensor_Neuron(name = str(i), linkName = link)
+                pyrosim.Send_Sensor_Neuron(name = i, linkName = link)
+                sensors = sensors + [i]
                 i = i + 1
+            if linkNum < self.numLinks - 1:
+                pyrosim.Send_Motor_Neuron(name = i, jointName = link+"_link"+str(linkNum+1))
+                motors = motors + [i]
+                i = i + 1
+            linkNum = linkNum + 1
+        for sensor in range(len(sensors)):
+            for motor in range(len(motors)):
+                pyrosim.Send_Synapse(sourceNeuronName = sensor, targetNeuronName = motor, weight = 1)
         pyrosim.End()
