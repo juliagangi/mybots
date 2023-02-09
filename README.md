@@ -4,6 +4,10 @@
 
 My snake grows along the x-axis, at fixed z- and y-coordinates. The number of snakes and links per snake are randomly generated when the program is run. Each time a link is added, with the exception of the last one, a joint is added that will connect it to the next link. A random integer selector decides whether or not to place a sensor neuron in the current link.
 
+![alt text](https://github.com/juliagangi/mybots/blob/randomSnake/Screen Shot 2023-02-09 at 11.12.39 AM.png?raw=true)
+
+![Alt text](Screen Shot 2023-02-09 at 11.12.39 AM.png?raw=true "Title")
+
 ## Running It
 
 First, clone my repo to your computer.
