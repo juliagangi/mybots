@@ -11,7 +11,7 @@ class ROBOT:
         self.myID = solutionID
         self.motors = {}
         self.links = links
-        self.robot = p.loadURDF("body" + str(self.myID) + ".urdf")
+        self.robot = p.loadURDF("body.urdf")
         pyrosim.Prepare_To_Simulate(self.robot)
         self.Prepare_To_Sense()
         self.Prepare_To_Act()
@@ -40,7 +40,6 @@ class ROBOT:
                 desiredAngle = self.nn.Get_Value_Of(neuronName)*c.motorJointRange
                 self.motors[jointName].Set_Value(self.robot,desiredAngle)
                 
-
     def Get_Fitness(self):
         basePositionAndOrientation = p.getBasePositionAndOrientation(self.robot)
         basePosition = basePositionAndOrientation[0]
@@ -49,8 +48,6 @@ class ROBOT:
         os.system("mv tmp" + str(self.myID) + ".txt" " fitness" + str(self.myID) + ".txt")
         fitnessFile.write(str(xPosition))
         fitnessFile.close()
-
-
 
     def Think(self):
         self.nn.Update()
