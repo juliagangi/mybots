@@ -1,26 +1,46 @@
 import numpy
 import pyrosim.pyrosim as pyrosim
 from pyrosim.neuralNetwork import NEURAL_NETWORK
+import os
 import random
+import time
 import constants as c
-from simulation import SIMULATION
 
 class SOLUTION:
     def __init__(self,nextAvailableID):
-        self.myID = nextAvailableID
+        self.weights = 2*numpy.random.rand(c.numSensorNeurons,c.numMotorNeurons) - 1
         self.links = {}
+        self.joints = []
+        self.myID = nextAvailableID
 
-    def Start_Simulation(self):
+    def Start_Simulation(self,directOrGUI):
         self.Create_World()
         self.Create_Body()
         self.Create_Brain()
-        simulation = SIMULATION(self.myID,self.links)
-        simulation.Run()
+        os.system("python3 simulate.py " + directOrGUI + " " + str(self.myID) + " 2&>1 &")
+        #os.system("python3 simulate.py " + directOrGUI + " " + str(self.myID) + " &")
+
+    def Wait_For_Simulation_To_End(self,directOrGUI):
+        while not os.path.exists("fitness" + str(self.myID) + ".txt"):
+            time.sleep(0.3)
+        fitnessFileName = "fitness" + str(self.myID) + ".txt"
+        fitnessFile = open(fitnessFileName, "r")
+        self.fitness = float(fitnessFile.read())
+        fitnessFile.close()
+        os.system("rm " + fitnessFileName)
+
+    def Mutate(self):
+        row = random.randint(0,c.numSensorNeurons-1)
+        col = random.randint(0,c.numMotorNeurons-1)
+        self.weights[row,col] = 2*random.random() - 1
+
+    def Set_ID(self,ID):
+        self.myID = ID
 
     def Create_World(self):
         pyrosim.Start_SDF("world.sdf")
+        pyrosim.Send_Cube(name="Box", pos=[-3,3,0.5], size=[1,1,1])
         pyrosim.End()
-
 
     def Create_Body(self):
         pyrosim.Start_URDF("body" + str(self.myID) + ".urdf")
