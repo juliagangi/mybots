@@ -1,8 +1,8 @@
-import random
-from solution import SOLUTION
+from simulation import SIMULATION
+import sys
 
-numSims = random.randint(1,9)
-print(numSims)
-for i in range(numSims):
-        solution = SOLUTION(i)
-        solution.Start_Simulation()
+directOrGUI = sys.argv[1]
+solutionID = sys.argv[2]
+simulation = SIMULATION(directOrGUI,solutionID)
+simulation.Run()
+simulation.Get_Fitness()
