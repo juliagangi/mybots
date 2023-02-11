@@ -21,7 +21,7 @@ class ROBOT:
     def Prepare_To_Sense(self):
         self.sensors = {}
         for link in self.links:
-            if self.links[link][2]:
+            if self.links[link][0]:
                 self.sensors[link] = SENSOR(link)
 
     def Sense(self,t):
