@@ -39,6 +39,18 @@ class ROBOT:
                 jointName = self.nn.Get_Motor_Neurons_Joint(neuronName)
                 desiredAngle = self.nn.Get_Value_Of(neuronName)*c.motorJointRange
                 self.motors[jointName].Set_Value(self.robot,desiredAngle)
+                
+
+    def Get_Fitness(self):
+        basePositionAndOrientation = p.getBasePositionAndOrientation(self.robot)
+        basePosition = basePositionAndOrientation[0]
+        xPosition = basePosition[0]
+        fitnessFile = open("tmp" + str(self.myID) + ".txt", "w")
+        os.system("mv tmp" + str(self.myID) + ".txt" " fitness" + str(self.myID) + ".txt")
+        fitnessFile.write(str(xPosition))
+        fitnessFile.close()
+
+
 
     def Think(self):
         self.nn.Update()
