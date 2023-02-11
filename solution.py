@@ -43,7 +43,7 @@ class SOLUTION:
         pyrosim.End()
 
     def Create_Body(self):
-        pyrosim.Start_URDF("body" + str(self.myID) + ".urdf")
+        pyrosim.Start_URDF("body.urdf")
         height = random.randint(2,4)
         length = random.randint(height,8)
         for link in range(height):
