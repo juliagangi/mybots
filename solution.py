@@ -8,8 +8,6 @@ from simulation import SIMULATION
 class SOLUTION:
     def __init__(self,nextAvailableID):
         self.myID = nextAvailableID
-        self.numLinks = random.randint(2,12)
-        print(self.numLinks)
         self.links = {}
 
     def Start_Simulation(self):
