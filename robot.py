@@ -7,10 +7,9 @@ import os
 import constants as c
 
 class ROBOT:
-    def __init__(self,solutionID,links):
+    def __init__(self,solutionID):
         self.myID = solutionID
         self.motors = {}
-        self.links = links
         self.robot = p.loadURDF("body.urdf")
         pyrosim.Prepare_To_Simulate(self.robot)
         self.Prepare_To_Sense()
@@ -20,9 +19,13 @@ class ROBOT:
 
     def Prepare_To_Sense(self):
         self.sensors = {}
-        for link in self.links:
-            if self.links[link][0]:
-                self.sensors[link] = SENSOR(link)
+        i = 0
+        print(c.numMotorNeurons+1)
+        print(pyrosim.linkNamesToIndices)
+        for linkName in pyrosim.linkNamesToIndices:
+            if c.sensorNeuronsArray[i]:
+                self.sensors[linkName] = SENSOR(linkName)
+            i = i + 1
 
     def Sense(self,t):
         for sensor in self.sensors:
