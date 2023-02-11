@@ -11,7 +11,7 @@ class SIMULATION:
         physicsClient = p.connect(p.GUI)
         p.setAdditionalSearchPath(pybullet_data.getDataPath())
         self.world = WORLD()
-        self.robot = ROBOT(solutionID)
+        self.robot = ROBOT(solutionID,links)
 
     def Run(self):
         for i in range(c.numTimeSteps):
