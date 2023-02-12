@@ -7,10 +7,9 @@ import os
 import constants as c
 
 class ROBOT:
-    def __init__(self,solutionID,links):
+    def __init__(self,solutionID):
         self.myID = solutionID
         self.motors = {}
-        self.links = links
         self.robot = p.loadURDF("body.urdf")
         pyrosim.Prepare_To_Simulate(self.robot)
         self.Prepare_To_Sense()
