@@ -7,11 +7,11 @@ import os
 import constants as c
 
 class ROBOT:
-    def __init__(self,solutionID):
+    def __init__(self,solutionID,parentID):
         self.myID = solutionID
         self.motors = {}
-        self.robot = p.loadURDF("body.urdf")
-        pyrosim.Prepare_To_Simulate(self.robot)
+        self.robot = p.loadURDF("body" + str(parentID) + ".urdf")
+        pyrosim.Prepare_To_Simulate(self.robot,parentID)
         self.Prepare_To_Sense()
         self.Prepare_To_Act()
         self.nn = NEURAL_NETWORK("brain" + str(self.myID) + ".nndf")
@@ -20,9 +20,13 @@ class ROBOT:
     def Prepare_To_Sense(self):
         self.sensors = {}
         i = 0
-        print(c.numMotorNeurons+1)
         print(pyrosim.linkNamesToIndices)
         for linkName in pyrosim.linkNamesToIndices:
+            print("i")
+            print(i)
+            print("linkname")
+            print(linkName)
+            print(c.sensorNeuronsArray)
             if c.sensorNeuronsArray[i]:
                 self.sensors[linkName] = SENSOR(linkName)
             i = i + 1

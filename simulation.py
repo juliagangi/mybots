@@ -6,7 +6,7 @@ from robot import ROBOT
 import time
 
 class SIMULATION:
-    def __init__(self,directOrGUI,solutionID):
+    def __init__(self,directOrGUI,solutionID,parentID):
         if directOrGUI == "DIRECT":
             physicsClient = p.connect(p.DIRECT)
         else:
@@ -15,7 +15,7 @@ class SIMULATION:
         p.setGravity(0,0,-9.8)
         self.directOrGUI = directOrGUI
         self.world = WORLD()
-        self.robot = ROBOT(solutionID)
+        self.robot = ROBOT(solutionID,parentID)
 
     def Run(self):
         for i in range(c.numTimeSteps):
