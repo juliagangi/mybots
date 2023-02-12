@@ -26,5 +26,5 @@ Click this link to watch snakes generate: <https://youtu.be/kq59Hvzztgg>
 
 ## Credit
 
-credit goes to r/ludobots
+credit goes to r/ludobots and pyrosim
 
