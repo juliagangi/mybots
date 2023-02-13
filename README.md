@@ -8,7 +8,7 @@ To form the brain, every sensor neuron is connected to every motor neuron.
 
 ## The Robot
 
-![alt text](https://github.com/juliagangi/mybots/blob/3DCreature/above.png?raw=true)
+![alt text](https://github.com/juliagangi/mybots/blob/3DCreature/fromabove.png?raw=true)
 
 ![alt text](https://github.com/juliagangi/mybots/blob/3DCreature/below.png?raw=true)
 
