@@ -27,10 +27,8 @@ class SOLUTION:
 
     def Create_Body(self):
         pyrosim.Start_URDF("body.urdf")
-        height = c.height
-        length = c.length
         overalllink = 0
-        for link in range(height):
+        for link in range(c.height):
             xDim = numpy.random.rand() + .5
             yDim = numpy.random.rand() + .5
             zDim = numpy.random.rand() + .5
@@ -43,55 +41,63 @@ class SOLUTION:
             if random.randint(0,1):
                 sensor = 1
                 mycolor = "0 128 0 1"
-                mycolorname = "Green"            
+                mycolorname = "Green"
+            jointAxes = [random.randint(0,1), random.randint(0,1), random.randint(0,1)]  
+            if sum(jointAxes) == 0:
+                jointAxes[random.randint(0,2)] = 1
+            axis = str(jointAxes[0]) + " " + str(jointAxes[1]) + " " + str(jointAxes[2])
             self.links[link]=[sensor,xDim,yDim,zDim]       
             pyrosim.Send_Cube(name=str(link), pos=[xPos,yPos,zPos], size=[xDim,yDim,zDim], color=mycolor, colorname=mycolorname)
             if link > 0:
-                pyrosim.Send_Joint(name = str(link-1)+"_"+str(link), parent= str(link-1), child = str(link), type = "revolute", position = [0,0,self.links[link-1][3]], jointAxis = "1 1 1")
+                pyrosim.Send_Joint(name = str(link-1)+"_"+str(link), parent= str(link-1), child = str(link), type = "revolute", position = [0,0,self.links[link-1][3]], jointAxis = axis)
                 self.joints = self.joints + [str(link-1)+"_"+str(link)]
         dir_array = ['-x','+x','-y','+y']
-        linkname = height
-        toplinkdims = self.links[height-1][1:4]
+        linkname = c.height
+        toplinkdims = self.links[c.height-1][1:4]
         for i in range(len(dir_array)):
-            for link in range(length):
+            for link in range(c.length):
                 xDim = numpy.random.rand() + .5
                 yDim = numpy.random.rand() + .5
                 zDim = numpy.random.rand() + .5
+                jointAxes = [random.randint(0,1), random.randint(0,1), random.randint(0,1)]  
+                if sum(jointAxes) == 0:
+                    jointAxes[random.randint(0,2)] = 1
+                axis = str(jointAxes[0]) + " " + str(jointAxes[1]) + " " + str(jointAxes[2])
                 prevlink = linkname - 1
-                if dir_array[i] == '-x':
-                    axis = "0 1 0"
+                if dir_array[i] == '-x': 
+                    #axis = "0 1 0"                   
                     xPos = -xDim*.5
                     xJoint = -self.links[linkname-1][1]
                     if link == 0:
                         xJoint = -.5*toplinkdims[0]
-                        prevlink = height-1
+                        prevlink = c.height-1
                     yPos = 0
                     yJoint = 0
                 if dir_array[i] == '+x':
-                    axis = "0 1 0"
+                    #axis = "0 1 0"
                     xPos = xDim*.5
                     xJoint = self.links[linkname-1][1]
                     if link == 0:
                         xJoint = .5*toplinkdims[0]
-                        prevlink = height-1
+                        prevlink = c.height-1
                     yPos = 0
                     yJoint = 0
                 if dir_array[i] == '-y':
-                    axis = "1 0 0"
+                    #axis = "1 0 0"
                     yPos = -yDim*.5
                     yJoint = -self.links[linkname-1][2]
                     if link == 0:
                         yJoint = -.5*toplinkdims[1]
-                        prevlink = height-1
+                        prevlink = c.height-1
                     xPos = 0
                     xJoint = 0
                 if dir_array[i] == '+y':
-                    axis = "1 0 0"
+                    #axis = "1 0 0"
                     yPos = yDim*.5
                     yJoint = self.links[linkname-1][2]
                     if link == 0:
                         yJoint = .5*toplinkdims[1]
-                        prevlink = height-1
+                        prevlink = c.height-1
                     xPos = 0
                     xJoint = 0
                 zPos = .5*zDim

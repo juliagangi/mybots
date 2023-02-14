@@ -4,11 +4,11 @@ import random
 amplitude = numpy.pi/8
 frequency = 10
 offset = 0
-numTimeSteps = 1000
+numTimeSteps = 10000
 numberOfGenerations = 2
 populationSize = 1
 height = 2
-length = numpy.random.randint(height+2,8)
+length = random.randint(height+2,7)
 numMotorNeurons = height-1 + 4*length
 sensorNeuronsArray = []
 numSensorNeurons = 0
