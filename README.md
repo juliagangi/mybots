@@ -12,7 +12,7 @@ The body shape influences the behavior of the robot. For example, if the lower l
 
 ![alt text](https://github.com/juliagangi/mybots/blob/3DCreature/fromabove.png?raw=true)
 
-![alt text](https://github.com/juliagangi/mybots/blob/3DCreature/below.png?raw=true)
+![alt text](https://github.com/juliagangi/mybots/blob/3DCreature/fromside.png?raw=true)
 
 ## Running It
 
