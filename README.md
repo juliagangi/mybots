@@ -2,9 +2,7 @@
 
 ## The Code
 
-My creature grows up along the z-axis, then out in the -x, +x, -y, and +y directions. It is spider-like, except that there are 4 legs instead of 8. Each of the 4 "legs" contains the same number of links, the dimensions of which are constrained by [0,1), and which are jointed at the base of each. The body, or the vertical portion, always contains 2 links, while the number of links in the leg is constrained by [4,8], to ensure that the legs can reach the ground. A random integer selector decides whether or not to place a sensor neuron in the current link, while every joint receives a motor neuron.
-
-To form the brain, every sensor neuron is connected to every motor neuron. 
+My creature grows up along the z-axis, then out in the -x, +x, -y, and +y directions. It is spider-like, except that there are 4 legs instead of 8. Each of the 4 "legs" contains the same number of links, the dimensions of which are constrained by [0,1], and which are jointed at the base of each. The body, or the vertical portion, always contains 2 links, while the number of links in the leg is constrained by [4,8), to ensure that the legs can reach the ground. A random integer selector decides whether or not to place a sensor neuron in the current link, while every joint receives a motor neuron. To form the brain, every motor neuron is connected to a randomly selected sensor neuron.
 
 ## Possible Creatures
 
