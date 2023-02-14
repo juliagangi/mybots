@@ -10,21 +10,20 @@ class ROBOT:
     def __init__(self,solutionID):
         self.myID = solutionID
         self.motors = {}
-        self.robot = p.loadURDF("body.urdf")
+        self.robot = p.loadURDF("body" + str(self.myID) + ".urdf")
         pyrosim.Prepare_To_Simulate(self.robot)
+        self.nn = NEURAL_NETWORK("brain" + str(self.myID) + ".nndf")
         self.Prepare_To_Sense()
         self.Prepare_To_Act()
-        self.nn = NEURAL_NETWORK("brain" + str(self.myID) + ".nndf")
+        #self.nn = NEURAL_NETWORK("brain" + str(self.myID) + ".nndf")
         os.system("rm brain" + str(self.myID) + ".nndf")
 
     def Prepare_To_Sense(self):
         self.sensors = {}
-        i = 0
-        print(pyrosim.linkNamesToIndices)
-        for linkName in pyrosim.linkNamesToIndices:
-            if c.sensorNeuronsArray[i]:
-                self.sensors[linkName] = SENSOR(linkName)
-            i = i + 1
+        neurons = self.nn.Get_Sensor_Neurons()
+        for neuron in neurons:
+            linkName = neuron.Get_Link_Name()
+            self.sensors[linkName] = SENSOR(linkName)
 
     def Sense(self,t):
         for sensor in self.sensors:

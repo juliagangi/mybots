@@ -1,5 +1,7 @@
 import random
 from solution import SOLUTION
+import os
+import constants as c
 
 numSims = random.randint(1,9)
 print(numSims)
