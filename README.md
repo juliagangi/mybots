@@ -6,7 +6,7 @@
 My creature grows up along the z-axis, then out in the -x, +x, -y, and +y directions. It is spider-like, except that there are 4 legs instead of 8. Each of the 4 "legs" contains the same number of links, the dimensions of which are constrained by [.5,1.5], and which are jointed at the base of each. The joint axis for each joint is randomly generated. The body, or the vertical portion, always contains 2 links, while the number of links in the leg is constrained by [4,7], to ensure that the legs can reach the ground. 
 
 #### The brain
-Every link has a 3 in 5 chance of receiving a sensor neuron: if the integer randomly selected from [0,4] is greater than 1, a sensor neuron is placed in the given link. Every joint receives a motor neuron. To form the brain, every motor neuron is connected to a randomly selected sensor neuron. Each synapse is given a random weight, which is a floating point number constrained by [-1,1]. 
+Every link has a 3 in 5 chance of receiving a sensor neuron: if the integer randomly selected from [0,4] is greater than 1, a sensor neuron is placed in the given link. Every joint receives a motor neuron. To form the brain, every motor neuron is connected to a randomly selected sensor neuron. Each synapse is given a random weight, which is a floating point number constrained by [-1,1]. A synapse could create a connection between a link and a joint that are separated by many links and joints -- there is no restriction, besides numerical bounds, on how links can influence joints.
 
 ## Possible Creatures
 
