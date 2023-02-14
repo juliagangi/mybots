@@ -1,0 +1,44 @@
+pybullet build time: Jan  6 2023 12:00:23
+4
+8
+{'1': 0, '0': -1, '2': 1, '3': 2, '4': 3, '5': 4, '6': 5, '7': 6, '8': 7, '9': 8, '10': 9, '11': 10, '12': 11, '13': 12, '14': 13, '15': 14, '16': 15, '17': 16, '18': 17, '19': 18, '20': 19, '21': 20}
+Version = 4.1 INTEL-16.5.14
+Vendor = Intel Inc.
+Renderer = Intel(R) Iris(TM) Plus Graphics 645
+b3Printf: Selected demo: Physics Server
+startThreads creating 1 threads.
+starting thread 0
+started thread 0 
+MotionThreadFunc thread started
+b3Printf: b3Warning[examples/Importers/ImportURDFDemo/BulletUrdfImporter.cpp,126]:
+
+b3Printf: expected a world element, continuing without it.
+numActiveThreads = 0
+stopping threads
+Thread with taskId 0 exiting
+Thread TERMINATED
+destroy semaphore
+semaphore destroyed
+destroy main semaphore
+main semaphore destroyed
+Traceback (most recent call last):
+  File "/Users/juliagangi/Documents/GitHub/mybots/simulate.py", line 8, in <module>
+    solution.Start_Simulation()
+  File "/Users/juliagangi/Documents/GitHub/mybots/solution.py", line 22, in Start_Simulation
+    simulation.Run()
+  File "/Users/juliagangi/Documents/GitHub/mybots/simulation.py", line 20, in Run
+    self.robot.Sense(i)
+  File "/Users/juliagangi/Documents/GitHub/mybots/robot.py", line 31, in Sense
+    self.sensors[sensor].Get_Value(t)
+  File "/Users/juliagangi/Documents/GitHub/mybots/sensor.py", line 11, in Get_Value
+    self.values[t] = pyrosim.Get_Touch_Sensor_Value_For_Link(self.linkName)
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/juliagangi/Documents/GitHub/mybots/pyrosim/pyrosim.py", line 55, in Get_Touch_Sensor_Value_For_Link
+    pts = p.getContactPoints()
+          ^^^^^^^^^^^^^^^^^^^^
+pybullet.error: Not connected to physics server.
+Exception ignored in: <function SIMULATION.__del__ at 0x110e8f1a0>
+Traceback (most recent call last):
+  File "/Users/juliagangi/Documents/GitHub/mybots/simulation.py", line 26, in __del__
+    p.disconnect()
+pybullet.error: Not connected to physics server.
