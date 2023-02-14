@@ -18,7 +18,7 @@ class SOLUTION:
         self.Create_World()
         self.Create_Body()
         self.Create_Brain()
-        simulation = SIMULATION(self.myID,self.links)
+        simulation = SIMULATION(self.myID)
         simulation.Run()
 
     def Create_World(self):
