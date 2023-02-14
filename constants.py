@@ -13,9 +13,9 @@ numMotorNeurons = height-1 + 4*length
 sensorNeuronsArray = []
 numSensorNeurons = 0
 for i in range(numMotorNeurons+1):
-    if random.randint(0,2) != 0:
+    if random.randint(0,4) > 1:
         sensorNeuronsArray = sensorNeuronsArray + [1]
         numSensorNeurons = numSensorNeurons + 1
     else:
         sensorNeuronsArray = sensorNeuronsArray + [0]
-motorJointRange = .2
+motorJointRange = .3
