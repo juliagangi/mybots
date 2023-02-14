@@ -31,9 +31,9 @@ class SOLUTION:
         length = c.length
         overalllink = 0
         for link in range(height):
-            xDim = numpy.random.rand()
-            yDim = numpy.random.rand()
-            zDim = numpy.random.rand()
+            xDim = numpy.random.rand() + .5
+            yDim = numpy.random.rand() + .5
+            zDim = numpy.random.rand() + .5
             xPos = 0
             yPos = 0
             zPos = .5*zDim
@@ -54,9 +54,9 @@ class SOLUTION:
         toplinkdims = self.links[height-1][1:4]
         for i in range(len(dir_array)):
             for link in range(length):
-                xDim = numpy.random.rand()
-                yDim = numpy.random.rand()
-                zDim = numpy.random.rand()
+                xDim = numpy.random.rand() + .5
+                yDim = numpy.random.rand() + .5
+                zDim = numpy.random.rand() + .5
                 prevlink = linkname - 1
                 if dir_array[i] == '-x':
                     axis = "0 1 0"

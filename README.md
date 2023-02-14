@@ -2,7 +2,7 @@
 
 ## The Code
 
-My creature grows up along the z-axis, then out in the -x, +x, -y, and +y directions. It is spider-like, except that there are 4 legs instead of 8. Each of the 4 "legs" contains the same number of links, the dimensions of which are constrained by [0,1], and which are jointed at the base of each. The body, or the vertical portion, always contains 2 links, while the number of links in the leg is constrained by [4,8), to ensure that the legs can reach the ground. Every link has a 3 in 5 chance of receiving a sensor neuron: if the integer randomly selected from [0,4] is greater than 1, a sensor neuron is placed in the given link. Every joint receives a motor neuron. To form the brain, every motor neuron is connected to a randomly selected sensor neuron. Each synapse is given a random weight, which is a floating point number constrained by [-1,1].
+My creature grows up along the z-axis, then out in the -x, +x, -y, and +y directions. It is spider-like, except that there are 4 legs instead of 8. Each of the 4 "legs" contains the same number of links, the dimensions of which are constrained by [.5,1.5], and which are jointed at the base of each. The body, or the vertical portion, always contains 2 links, while the number of links in the leg is constrained by [4,8), to ensure that the legs can reach the ground. Every link has a 3 in 5 chance of receiving a sensor neuron: if the integer randomly selected from [0,4] is greater than 1, a sensor neuron is placed in the given link. Every joint receives a motor neuron. To form the brain, every motor neuron is connected to a randomly selected sensor neuron. Each synapse is given a random weight, which is a floating point number constrained by [-1,1].
 
 ## Possible Creatures
 
@@ -18,10 +18,10 @@ The body shape influences the behavior of the robot. For example, if the lower l
 
 First, clone my repo to your computer.
 
-To watch a series of random spiders being generated, run spiders.py or run this command:
+To watch a series of random spiders being generated, run spider.py or run this command:
 
 ```bash
-python3 spiders.py
+python3 spider.py
 ```
 
 ## Videos
