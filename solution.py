@@ -31,9 +31,9 @@ class SOLUTION:
         length = c.length
         overalllink = 0
         for link in range(height):
-            xDim = numpy.random.rand()+1
-            yDim = numpy.random.rand()+1
-            zDim = numpy.random.rand()+1
+            xDim = numpy.random.rand()
+            yDim = numpy.random.rand()
+            zDim = numpy.random.rand()
             xPos = 0
             yPos = 0
             zPos = .5*zDim
@@ -54,9 +54,9 @@ class SOLUTION:
         toplinkdims = self.links[height-1][1:4]
         for i in range(len(dir_array)):
             for link in range(length):
-                xDim = numpy.random.rand()+1
-                yDim = numpy.random.rand()+1
-                zDim = numpy.random.rand()+1
+                xDim = numpy.random.rand()
+                yDim = numpy.random.rand()
+                zDim = numpy.random.rand()
                 prevlink = linkname - 1
                 if dir_array[i] == '-x':
                     axis = "0 1 0"
@@ -121,7 +121,7 @@ class SOLUTION:
         for joint in self.joints:
             pyrosim.Send_Motor_Neuron(name = i, jointName = joint)
             i = i + 1
-        for currentRow in range(c.numSensorNeurons):
-            for currentColumn in range(c.numMotorNeurons):
-                pyrosim.Send_Synapse(sourceNeuronName = currentRow, targetNeuronName = currentColumn+c.numSensorNeurons, weight = self.weights[currentRow][currentColumn])
+        for motor in range(c.numMotorNeurons):
+            sensor = numpy.random.randint(0,c.numSensorNeurons)
+            pyrosim.Send_Synapse(sourceNeuronName = sensor, targetNeuronName = motor+c.numSensorNeurons, weight = numpy.random.rand()*2 - 1)
         pyrosim.End()
