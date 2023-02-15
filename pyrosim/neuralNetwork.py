@@ -56,7 +56,17 @@ class NEURAL_NETWORK:
     
         return self.neurons[neuronName].Get_Value()
 
+    def Get_Sensor_Neurons(self):
 
+        sensorNeurons = [] 
+
+        for neuronName in self.neurons:
+            
+            if self.neurons[neuronName].Is_Sensor_Neuron():
+
+                sensorNeurons.append(self.neurons[neuronName])
+
+        return sensorNeurons
 
 # ---------------- Private methods --------------------------------------
 

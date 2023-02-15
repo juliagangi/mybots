@@ -5,13 +5,14 @@ from motor import MOTOR
 from pyrosim.neuralNetwork import NEURAL_NETWORK
 import os
 import constants as c
+import numpy
 
 class ROBOT:
-    def __init__(self,solutionID,parentID):
+    def __init__(self,solutionID):
         self.myID = solutionID
         self.motors = {}
-        self.robot = p.loadURDF("body" + str(parentID) + ".urdf")
-        pyrosim.Prepare_To_Simulate(self.robot,parentID)
+        self.robot = p.loadURDF("body" + str(self.myID) + ".urdf")
+        pyrosim.Prepare_To_Simulate(self.robot)
         self.Prepare_To_Sense()
         self.Prepare_To_Act()
         self.nn = NEURAL_NETWORK("brain" + str(self.myID) + ".nndf")
@@ -19,17 +20,10 @@ class ROBOT:
 
     def Prepare_To_Sense(self):
         self.sensors = {}
-        i = 0
-        print(pyrosim.linkNamesToIndices)
-        for linkName in pyrosim.linkNamesToIndices:
-            print("i")
-            print(i)
-            print("linkname")
-            print(linkName)
-            print(c.sensorNeuronsArray)
-            if c.sensorNeuronsArray[i]:
-                self.sensors[linkName] = SENSOR(linkName)
-            i = i + 1
+        neurons = self.nn.Get_Sensor_Neurons()
+        for neuron in neurons:
+            linkName = neuron.Get_Link_Name()
+            self.sensors[linkName] = SENSOR(linkName)
 
     def Sense(self,t):
         for sensor in self.sensors:
@@ -48,12 +42,17 @@ class ROBOT:
                 self.motors[jointName].Set_Value(self.robot,desiredAngle)
                 
     def Get_Fitness(self):
+        # if fitness file doesn't exist, write position to it
+        # if fitness file does exist, read from it
+        # write back displacement to it
         basePositionAndOrientation = p.getBasePositionAndOrientation(self.robot)
         basePosition = basePositionAndOrientation[0]
         xPosition = basePosition[0]
+        yPosition = basePosition[1]
+        dist = numpy.sqrt(xPosition*xPosition + yPosition*yPosition)
         fitnessFile = open("tmp" + str(self.myID) + ".txt", "w")
         os.system("mv tmp" + str(self.myID) + ".txt" " fitness" + str(self.myID) + ".txt")
-        fitnessFile.write(str(xPosition))
+        fitnessFile.write(str(dist))
         fitnessFile.close()
 
     def Think(self):

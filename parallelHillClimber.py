@@ -9,21 +9,19 @@ class PARALLEL_HILL_CLIMBER:
         os.system("rm fitness*.txt")
         self.parents = {}
         self.nextAvailableID = 0
-        parentID = 0
         for i in range(c.populationSize):
-            self.parents[i] = SOLUTION(self.nextAvailableID,parentID)
+            self.parents[i] = SOLUTION(self.nextAvailableID)
             self.nextAvailableID = self.nextAvailableID + 1
-            parentID = parentID + 1
 
     def Evolve(self):
-        self.Evaluate(self.parents,"parent")
+        self.Evaluate(self.parents)
         for currentGeneration in range(c.numberOfGenerations):
             self.Evolve_For_One_Generation()
 
     def Evolve_For_One_Generation(self):
         self.Spawn()
         self.Mutate()
-        self.Evaluate(self.children,"child")
+        self.Evaluate(self.children)
         self.Print()
         self.Select()        
 
@@ -39,9 +37,12 @@ class PARALLEL_HILL_CLIMBER:
         for child in self.children:
             self.children[child].Mutate()
 
-    def Evaluate(self,solutions,parentOrChild):
+    def Evaluate(self,solutions,parentID,parentOrChild):
+        i = 0
         for parent in solutions:
-            solutions[parent].Start_Simulation("DIRECT",parentOrChild)
+            parentID = self.parents[i].myID
+            i = i + 1
+            solutions[parent].Start_Simulation("DIRECT",parentID,parentOrChild)
         for parent in solutions:
             solutions[parent].Wait_For_Simulation_To_End("DIRECT")
 
