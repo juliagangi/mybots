@@ -20,8 +20,6 @@ class SOLUTION:
                 self.numSensorNeurons = self.numSensorNeurons + 1
             else:
                 self.sensorNeuronsArray = self.sensorNeuronsArray + [0]
-        print("num sensors",self.numSensorNeurons)
-        print("sensors",self.sensorNeuronsArray)
 
     def Start_Simulation(self):
         self.Create_World()
