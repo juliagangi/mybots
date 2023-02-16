@@ -11,7 +11,7 @@ class SOLUTION:
         self.links = {}
         self.joints = []
         self.myID = nextAvailableID
-        self.length = random.randint(c.height+2,7)
+        self.length = random.randint(c.height,7)
         self.numMotorNeurons = c.height-1 + 4*self.length
         self.sensorNeuronsArray = []
         self.numSensorNeurons = 0
