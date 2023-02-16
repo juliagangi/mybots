@@ -11,12 +11,12 @@ class ROBOT:
     def __init__(self,solutionID):
         self.myID = solutionID
         self.motors = {}
-        self.robot = p.loadURDF("body" + str(self.myID) + ".urdf")
+        self.robot = p.loadURDF("body/body" + str(self.myID) + ".urdf")
         pyrosim.Prepare_To_Simulate(self.robot)
+        self.nn = NEURAL_NETWORK("brain/brain" + str(self.myID) + ".nndf")
         self.Prepare_To_Sense()
         self.Prepare_To_Act()
-        self.nn = NEURAL_NETWORK("brain" + str(self.myID) + ".nndf")
-        os.system("rm brain" + str(self.myID) + ".nndf")
+        os.system("rm brain/brain" + str(self.myID) + ".nndf")
 
     def Prepare_To_Sense(self):
         self.sensors = {}
@@ -51,7 +51,7 @@ class ROBOT:
         yPosition = basePosition[1]
         dist = numpy.sqrt(xPosition*xPosition + yPosition*yPosition)
         fitnessFile = open("tmp" + str(self.myID) + ".txt", "w")
-        os.system("mv tmp" + str(self.myID) + ".txt" " fitness" + str(self.myID) + ".txt")
+        os.system("mv tmp" + str(self.myID) + ".txt" " fitness/fitness" + str(self.myID) + ".txt")
         fitnessFile.write(str(dist))
         fitnessFile.close()
 

@@ -5,8 +5,9 @@ import os
 
 class PARALLEL_HILL_CLIMBER:
     def __init__(self):
-        os.system("rm brain*.nndf")
-        os.system("rm fitness*.txt")
+        os.system("rm brain/brain*.nndf")
+        os.system("rm fitness/fitness*.txt")
+        os.system("rm body/body*.urdf")
         self.parents = {}
         self.nextAvailableID = 0
         for i in range(c.populationSize):
@@ -14,14 +15,14 @@ class PARALLEL_HILL_CLIMBER:
             self.nextAvailableID = self.nextAvailableID + 1
 
     def Evolve(self):
-        self.Evaluate(self.parents)
+        self.Evaluate(self.parents,"parent")
         for currentGeneration in range(c.numberOfGenerations):
             self.Evolve_For_One_Generation()
 
     def Evolve_For_One_Generation(self):
         self.Spawn()
         self.Mutate()
-        self.Evaluate(self.children)
+        self.Evaluate(self.children,"child")
         self.Print()
         self.Select()        
 
@@ -37,12 +38,9 @@ class PARALLEL_HILL_CLIMBER:
         for child in self.children:
             self.children[child].Mutate()
 
-    def Evaluate(self,solutions,parentID,parentOrChild):
-        i = 0
+    def Evaluate(self,solutions,parentOrChild):
         for parent in solutions:
-            parentID = self.parents[i].myID
-            i = i + 1
-            solutions[parent].Start_Simulation("DIRECT",parentID,parentOrChild)
+            solutions[parent].Start_Simulation("DIRECT",self.parents[parent].myID,parentOrChild)
         for parent in solutions:
             solutions[parent].Wait_For_Simulation_To_End("DIRECT")
 
@@ -60,7 +58,8 @@ class PARALLEL_HILL_CLIMBER:
             if currFitness > bestFitness:
                 bestFitness = currFitness
                 bestParent = currParent
-        bestParent.Start_Simulation("GUI","child")
+        bestParent.Start_Simulation("GUI",bestParent.myID,"parent")
+        #os.system("rm body/body*.urdf")
 
     def Print(self):
         print("\n")
