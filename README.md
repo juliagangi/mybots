@@ -13,7 +13,7 @@ Every link has a 3 in 5 chance of receiving a sensor neuron: if the integer rand
 The body shape influences the behavior of the robot. For example, if the lower link in the body has a small x or y dimension and a larger z dimension, it will be unstable and likely fall to the side. However, if the lower link in the body has a larger base, or is more cube-like, it will promote more stability in motion, although if it has dimensions that are too close to the upper bound (1), it will be harder for the legs to drag. Furthermore, if there are many (7 or 8) links in the legs, that means there are more joints, and the legs will be able to cause larger but less precise movements. Meanwhile, if the number of links in the legs is closer to the lower bound (4), they will only be able to cause slight, although more precise, movement. There is a tradeoff between size of movements and precision of movements.
 
 ## The Robot
-![alt text](https://github.com/juliagangi/mybots/blob/3DCreature/robotcycles.png?raw=true)
+![alt text](https://github.com/juliagangi/mybots/blob/3DCreature/robotcycle.png?raw=true)
 
 ![alt text](https://github.com/juliagangi/mybots/blob/3DCreature/fromabove.png?raw=true)
 
