@@ -31,7 +31,7 @@ python3 spider.py
 
 ## Videos
 
-Click this link to watch snakes generate: <https://youtu.be/l9f6s1ssYkY>
+Click this link to watch spiders generate: <https://youtu.be/l9f6s1ssYkY>
 
 ## Credit
 
