@@ -10,8 +10,8 @@ class SOLUTION:
         self.links = {}
         self.joints = []
         self.myID = nextAvailableID
-        self.length = random.randint(c.height,7)
-        self.numMotorNeurons = c.height-1 + 4*self.length
+        self.length = random.randint(1,5)
+        self.numMotorNeurons = 4*self.length
         self.sensorNeuronsArray = []
         self.numSensorNeurons = 0
         for i in range(self.numMotorNeurons+1):
@@ -42,12 +42,17 @@ class SOLUTION:
         if 1:
             pyrosim.Start_URDF("body" + str(self.myID) + ".urdf")
             overalllink = 0
+            xDim = 1.5
+            yDim = 1.5
+            zDim = .8
+            '''
             xDim = numpy.random.rand() + .5
             yDim = numpy.random.rand() + .5
             zDim = numpy.random.rand() + .5 
+            '''
             xPos = 0
             yPos = 0
-            zPos = c.heightdim
+            zPos = c.height
             mycolor = "0 0 255 1"
             mycolorname = "Blue"
             if self.sensorNeuronsArray[0]:
@@ -61,12 +66,11 @@ class SOLUTION:
             pyrosim.Send_Cube(name="0", pos=[xPos,yPos,zPos], size=[xDim,yDim,zDim], color=mycolor, colorname=mycolorname)
             dir_array = ['-x','+x','-y','+y']
             linkname = 1
-            toplinkdims = self.links[c.height-1]
             for i in range(len(dir_array)):
                 for link in range(self.length):
-                    xDim = numpy.random.rand() + .5
-                    yDim = numpy.random.rand() + .5
-                    zDim = numpy.random.rand() + .5
+                    xDim = numpy.random.rand() 
+                    yDim = numpy.random.rand() 
+                    zDim = numpy.random.rand() 
                     jointAxes = [random.randint(0,1), random.randint(0,1), random.randint(0,1)]  
                     if sum(jointAxes) == 0:
                         jointAxes[random.randint(0,2)] = 1
@@ -75,14 +79,14 @@ class SOLUTION:
                     zJoint = 0
                     zPos = 0
                     if link == 0:
-                        zJoint = c.heightdim
+                        zJoint = c.height
                         prevlink = 0
                     if dir_array[i] == '-x': 
                         #axis = "0 1 0"                   
                         xPos = -xDim*.5
                         xJoint = -self.links[prevlink][0]
                         if link == 0:
-                            xJoint = -.5*toplinkdims[0]
+                            xJoint = -.5*self.links[0][0]
                         yPos = 0
                         yJoint = 0
                     if dir_array[i] == '+x':
@@ -90,7 +94,7 @@ class SOLUTION:
                         xPos = xDim*.5
                         xJoint = self.links[prevlink][0]
                         if link == 0:
-                            xJoint = .5*toplinkdims[0]
+                            xJoint = .5*self.links[0][0]
                         yPos = 0
                         yJoint = 0
                     if dir_array[i] == '-y':
@@ -98,7 +102,7 @@ class SOLUTION:
                         yPos = -yDim*.5
                         yJoint = -self.links[prevlink][1]
                         if link == 0:
-                            yJoint = -.5*toplinkdims[1]
+                            yJoint = -.5*self.links[0][1]
                         xPos = 0
                         xJoint = 0
                     if dir_array[i] == '+y':
@@ -106,7 +110,7 @@ class SOLUTION:
                         yPos = yDim*.5
                         yJoint = self.links[prevlink][1]
                         if link == 0:
-                            yJoint = .5*toplinkdims[1]
+                            yJoint = .5*self.links[0][1]
                         xPos = 0
                         xJoint = 0
                     mycolor = "0 0 255 1"
@@ -121,17 +125,15 @@ class SOLUTION:
                     pyrosim.Send_Cube(name=str(linkname), pos=[xPos,yPos,zPos], size=[xDim,yDim,zDim], color=mycolor, colorname=mycolorname)
                     pyrosim.Send_Joint(name = jointname, parent= str(prevlink), child = str(linkname), type = "revolute", position = [xJoint,yJoint,zJoint], jointAxis = axis)
                     linkname = linkname + 1
-                height = c.heightdim - .5*self.links[0][2]
+                height = c.height - .5*self.links[0][2]
                 remainder = height
                 j = 0
-                last = False
                 while remainder > 0:
-                    xDim = numpy.random.rand() + .5
-                    yDim = numpy.random.rand() + .5
+                    xDim = numpy.random.rand()
+                    yDim = numpy.random.rand()
                     zDim = numpy.random.rand()*remainder
                     if j > 1:
                         zDim = remainder
-                        last = True
                     remainder = remainder - zDim
                     xPos = 0
                     yPos = 0
