@@ -58,8 +58,7 @@ class PARALLEL_HILL_CLIMBER:
             if currFitness > bestFitness:
                 bestFitness = currFitness
                 bestParent = currParent
-        bestParent.Start_Simulation("GUI",bestParent.myID,"parent")
-        #os.system("rm body/body*.urdf")
+        bestParent.Start_Simulation("GUI",bestParent.myID,"final")
 
     def Print(self):
         print("\n")

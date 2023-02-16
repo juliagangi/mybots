@@ -13,7 +13,6 @@ class SOLUTION:
         self.myID = nextAvailableID
         self.length = random.randint(c.height+2,7)
         self.numMotorNeurons = c.height-1 + 4*self.length
-        self.weights = 2*numpy.random.rand(self.numMotorNeurons) - 1
         self.sensorNeuronsArray = []
         self.numSensorNeurons = 0
         for i in range(self.numMotorNeurons+1):
@@ -29,10 +28,12 @@ class SOLUTION:
 
     def Start_Simulation(self,directOrGUI,parentID,parentOrChild):
         self.Create_World()
-        self.Create_Body(parentID,parentOrChild)      
+        self.Create_Body(parentID,parentOrChild) 
+        self.weights = 2*numpy.random.rand(self.numSensorNeurons,self.numMotorNeurons) - 1
+        #self.weights = 2*numpy.random.rand(self.numMotorNeurons) - 1
         self.Create_Brain()
-        #os.system("python3 simulate.py " + directOrGUI + " " + str(self.myID) + " 2&>1 &")
-        os.system("python3 simulate.py " + directOrGUI + " " + str(self.myID) + " &")
+        os.system("python3 simulate.py " + directOrGUI + " " + str(self.myID) + " 2&>1 &")
+        #os.system("python3 simulate.py " + directOrGUI + " " + str(self.myID) + " &")
 
     def Wait_For_Simulation_To_End(self,directOrGUI):
         while not os.path.exists("fitness/fitness" + str(self.myID) + ".txt"):
@@ -56,9 +57,10 @@ class SOLUTION:
             self.synapseDict[motor] = sensor
         if rand == 2: # remove random synapse
             pass
-        if rand == 3: # change random synapse
+        if rand == 3: # change random synapse's weight
             motor = random.randint(0,self.numMotorNeurons-1)
-            self.weights[motor] = 2*random.random() - 1        
+            sensor = random.randint(0,self.numSensorNeurons-1)
+            self.weights[sensor,motor] = 2*random.random() - 1        
         #if rand == 4: # change size of cube? add cube?
         #    file = URDF.load("body" + str(self.myID) + ".urdf")
 
@@ -71,7 +73,9 @@ class SOLUTION:
         pyrosim.End()
 
     def Create_Body(self,parentID,parentOrChild):
-        if parentOrChild == 'child': # don't want to create new file w random 
+        if parentOrChild == 'final':
+            return
+        elif parentOrChild == 'child': # don't want to create new file w random 
             pyrosim.Start_URDF("body/body" + str(self.myID) + ".urdf")
             os.system("rm body/body" + str(self.myID) + ".urdf")
             os.system("cp " + "body/body" + str(parentID) + ".urdf" + " " + "body/body" + str(self.myID) + ".urdf")
@@ -94,7 +98,7 @@ class SOLUTION:
                 if sum(jointAxes) == 0:
                     jointAxes[random.randint(0,2)] = 1
                 axis = str(jointAxes[0]) + " " + str(jointAxes[1]) + " " + str(jointAxes[2])
-                self.links[link]=[xDim,yDim,zDim]       
+                self.links[link]=[xDim,yDim,zDim]     
                 pyrosim.Send_Cube(name=str(link), pos=[xPos,yPos,zPos], size=[xDim,yDim,zDim], color=mycolor, colorname=mycolorname)
                 if link > 0:
                     pyrosim.Send_Joint(name = str(link-1)+"_"+str(link), parent= str(link-1), child = str(link), type = "revolute", position = [0,0,self.links[link-1][2]], jointAxis = axis)
@@ -158,12 +162,11 @@ class SOLUTION:
                     self.links[linkname] = [xDim,yDim,zDim]
                     jointname = str(prevlink)+"_"+str(linkname)
                     self.joints = self.joints + [jointname]
-                    #if link == self.link-1:
-                    #    lower_dims.append([linkname,xPos,])
                     pyrosim.Send_Cube(name=str(linkname), pos=[xPos,yPos,zPos], size=[xDim,yDim,zDim], color=mycolor, colorname=mycolorname)
                     pyrosim.Send_Joint(name = jointname, parent= str(prevlink), child = str(linkname), type = "revolute", position = [xJoint,yJoint,0], jointAxis = axis)
                     linkname = linkname + 1
                 height = self.links[0][2] + self.links[1][2]
+                height = 4 - .5*self.links[2][2]
                 remainder = height
                 j = 0
                 last = False
@@ -191,33 +194,32 @@ class SOLUTION:
                         self.sensorNeuronsArray.append(0)
                         mycolor = "0 0 255 1"
                         mycolorname = "Blue"
-                    #overalllink = overalllink + 1
                     prevlink = linkname - 1
                     if dir_array[i] == '-x':
                         xJoint = 0
                         yJoint = 0
-                        zJoint = -zDim
+                        zJoint = -self.links[prevlink][2]
                         if j == 0:
                             xJoint = -.5*self.links[prevlink][0]
                             zJoint = 0
                     if dir_array[i] == '+x':
                         xJoint = 0
                         yJoint = 0
-                        zJoint = -zDim
+                        zJoint = -self.links[prevlink][2]
                         if j == 0:
                             xJoint = .5*self.links[prevlink][0]
                             zJoint = 0
                     if dir_array[i] == '-y':
                         xJoint = 0
                         yJoint = 0
-                        zJoint = -zDim
+                        zJoint = -self.links[prevlink][2]
                         if j == 0:
                             yJoint = -.5*self.links[prevlink][1]
                             zJoint = 0
                     if dir_array[i] == '+y':
                         xJoint = 0
                         yJoint = 0
-                        zJoint = -zDim
+                        zJoint = -self.links[prevlink][2]
                         if j == 0:
                             yJoint = .5*self.links[prevlink][1]
                             zJoint = 0
@@ -225,9 +227,9 @@ class SOLUTION:
                     jointName = str(prevlink)+"_"+str(linkname)
                     self.joints = self.joints + [jointName]
                     pyrosim.Send_Cube(name=str(linkname), pos=[xPos,yPos,zPos], size=[xDim,yDim,zDim], color=mycolor, colorname=mycolorname)
-                    if not last:
-                        pyrosim.Send_Joint(name = jointname, parent= str(prevlink), child = str(linkname), type = "revolute", position = [xJoint,yJoint,zJoint], jointAxis = axis)
-                        self.numMotorNeurons = self.numMotorNeurons + 1
+                    pyrosim.Send_Joint(name = jointName, parent= str(prevlink), child = str(linkname), type = "revolute", position = [xJoint,yJoint,zJoint], jointAxis = axis)
+                    self.numMotorNeurons = self.numMotorNeurons + 1
+                    self.synapseDict[self.numMotorNeurons - 1] = random.randint(0,self.numSensorNeurons-1)
                     linkname = linkname + 1
                     j = j + 1          
         pyrosim.End()
@@ -242,7 +244,14 @@ class SOLUTION:
         for joint in self.joints:
             pyrosim.Send_Motor_Neuron(name = i, jointName = joint)
             i = i + 1
+        for motor in range(self.numMotorNeurons):
+            for sensor in range(self.numSensorNeurons):
+                pyrosim.Send_Synapse(sourceNeuronName = sensor, targetNeuronName = motor+self.numSensorNeurons, weight = self.weights[sensor][motor])
+                #2*numpy.random.rand()-1)
+
+        '''
         for motor in self.synapseDict:
             sensor = self.synapseDict[motor]
             pyrosim.Send_Synapse(sourceNeuronName = sensor, targetNeuronName = motor+self.numSensorNeurons, weight = self.weights[motor])
+        '''
         pyrosim.End()
