@@ -12,6 +12,8 @@ Every link has a 3 in 5 chance of receiving a sensor neuron: if the integer rand
 
 The body shape influences the behavior of the robot. For example, if the robot is tall but has few links in the upper legs, it will be unstable and may fall over. Alternately, if the robot has many links in the upper legs, it will be more stable, with smaller and more precise movements, but the central link may sink towards the ground, causing friction and impeding movement. Consequently, the behavior of the robot depends on the ratio of height to leg length: for optimal motion, the spider should be slightly shorter than its length. Regardless, the width must be able to support movement of the legs to prevent toppling. There is a tradeoff between size of movements and precision/success of movements.
 
+## Possible Brains
+
 ## The Robot
 ![alt text](https://github.com/juliagangi/mybots/blob/3DEvolved/robotcycle.png?raw=true)
 
