@@ -45,11 +45,6 @@ class SOLUTION:
             xDim = 1.5
             yDim = 1.5
             zDim = .8
-            '''
-            xDim = numpy.random.rand() + .5
-            yDim = numpy.random.rand() + .5
-            zDim = numpy.random.rand() + .5 
-            '''
             xPos = 0
             yPos = 0
             zPos = c.height
