@@ -54,7 +54,7 @@ class ROBOT:
         dist = numpy.sqrt(xPosition*xPosition + yPosition*yPosition)
         fitnessFile = open("tmp" + str(self.myID) + ".txt", "w")
         os.system("mv tmp" + str(self.myID) + ".txt" " fitness/fitness" + str(self.myID) + ".txt")
-        fitnessFile.write(str(dist - zDisp))
+        fitnessFile.write(str(dist))
         fitnessFile.close()
 
     def Think(self):
