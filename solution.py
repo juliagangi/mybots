@@ -5,6 +5,7 @@ import os
 import random
 import time
 import constants as c
+#from parallelHillClimber import PARALLEL_HILL_CLIMBER as phc
 
 class SOLUTION:
     def __init__(self,nextAvailableID):
@@ -31,9 +32,9 @@ class SOLUTION:
             sensor = random.randint(0,self.numSensorNeurons-1)
             self.synapseDict[motor] = sensor
 
-    def Start_Simulation(self,directOrGUI,parentID,parentOrChild):
+    def Start_Simulation(self,directOrGUI,isfinal):
         self.Create_World()
-        self.Create_Body(parentID,parentOrChild) 
+        self.Create_Body(isfinal) 
         #self.weights = 2*numpy.random.rand(self.numSensorNeurons,self.numMotorNeurons) - 1
         self.weights = 2*numpy.random.rand(self.numMotorNeurons) - 1
         self.Create_Brain()
@@ -45,7 +46,10 @@ class SOLUTION:
             time.sleep(0.3)
         fitnessFileName = "fitness/fitness" + str(self.myID) + ".txt"
         fitnessFile = open(fitnessFileName, "r")
-        self.fitness = float(fitnessFile.read())
+        try:
+            self.fitness = float(fitnessFile.read())
+        except: 
+            return
         fitnessFile.close()
         os.system("rm " + fitnessFileName)
 
@@ -54,16 +58,16 @@ class SOLUTION:
         os.system("rm body/body" + str(self.myID) + ".urdf")
         os.system("cp " + "body/body" + str(parentID) + ".urdf" + " " + "body/body" + str(self.myID) + ".urdf")
         rand = random.randint(0,3)
-        if rand == 0: # add random sensor
+        if rand == 0: # add sensor neuron to random link
             new_sensor = random.randint(0,len(self.links) - 1)
             while self.sensorNeuronsArray[new_sensor] == 1:
                 new_sensor = random.randint(0,len(self.links) - 1)
             self.sensorNeuronsArray[new_sensor] = 1
-        if rand == 1: # change random synapse
+        if rand == 1: # change sensor neuron that motor neuron affects
             motor = random.randint(0,self.numMotorNeurons - 1)  
             sensor = random.randint(0,len(self.links) - 1)
             self.synapseDict[motor] = sensor
-        if rand == 2: # change random axis
+        if rand == 2: # change random joint axis
             motor = random.randint(0,self.numMotorNeurons-1)
             jointAxes = [random.randint(0,1), random.randint(0,1), random.randint(0,1)]  
             if sum(jointAxes) == 0:
@@ -85,16 +89,10 @@ class SOLUTION:
         #pyrosim.Send_Cube(name="Box", pos=[-3,3,0.5], size=[1,1,1])
         pyrosim.End()
 
-    def Create_Body(self,parentID,parentOrChild):
-        if parentOrChild == 'final':
+    def Create_Body(self,isfinal):
+        if isfinal:
             return
-        '''
-        elif parentOrChild == 'child': # don't want to create new file w random 
-            pyrosim.Start_URDF("body/body" + str(self.myID) + ".urdf")
-            os.system("rm body/body" + str(self.myID) + ".urdf")
-            os.system("cp " + "body/body" + str(parentID) + ".urdf" + " " + "body/body" + str(self.myID) + ".urdf")
-        '''
-        if 1:
+        else:
             pyrosim.Start_URDF("body/body" + str(self.myID) + ".urdf")
             overalllink = 0
             xDim = 1.5
