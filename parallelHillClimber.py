@@ -36,7 +36,7 @@ class PARALLEL_HILL_CLIMBER:
 
     def Mutate(self):
         for child in self.children:
-            self.children[child].Mutate()
+            self.children[child].Mutate(child.myID)
 
     def Evaluate(self,solutions,parentOrChild):
         for parent in solutions:

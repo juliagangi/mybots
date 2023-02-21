@@ -50,11 +50,14 @@ class ROBOT:
         xPosition = basePosition[0]
         yPosition = basePosition[1]
         zPosition = basePosition[2]
-        zDisp = zPosition - c.height
+        zDisp = c.height - zPosition
         dist = numpy.sqrt(xPosition*xPosition + yPosition*yPosition)
+        fitness = dist
+        if zDisp > .5:
+            fitness = dist - zDisp
         fitnessFile = open("tmp" + str(self.myID) + ".txt", "w")
         os.system("mv tmp" + str(self.myID) + ".txt" " fitness/fitness" + str(self.myID) + ".txt")
-        fitnessFile.write(str(dist))
+        fitnessFile.write(str(fitness))
         fitnessFile.close()
 
     def Think(self):
