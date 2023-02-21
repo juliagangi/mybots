@@ -86,10 +86,6 @@ class SOLUTION:
         pyrosim.End()
 
     def Create_Body(self,parentID,parentOrChild):
-        print(parentOrChild)
-        print(self.jointDict)
-        print(self.length)
-        print(self.numMotorNeurons)
         if parentOrChild == 'final':
             return
         '''
