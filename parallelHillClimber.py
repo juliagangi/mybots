@@ -50,12 +50,13 @@ class PARALLEL_HILL_CLIMBER:
         for parent in self.parents:
             if self.children[parent].fitness > self.parents[parent].fitness:
                 self.parents[parent] = self.children[parent]
-                self.parents[parent].fitnessArray.append(self.parents[parent].fitness)
+            self.parents[parent].fitnessArray.append(self.parents[parent].fitness)
+            print(self.parents[parent].fitnessArray)
 
     def Plot(self):
         for parent in self.parents:
             array = self.parents[parent].fitnessArray
-            matplotlib.pyplot.plot(array, label=str(self.parents[parent].myID), linewidth=1)
+            matplotlib.pyplot.plot(array, label=str(parent), linewidth=1)
             #numpy.save("data/Values" + self.parents[parent].myID + ".npy", array, allow_pickle=True, fix_imports=True)
         #for parent in self.parents:
         #    backLegSensorValues = numpy.load("data/backLegSensorValues.npy")
