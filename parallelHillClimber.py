@@ -2,6 +2,8 @@ from solution import SOLUTION
 import constants as c
 import copy
 import os
+import numpy
+import matplotlib.pyplot
 
 class PARALLEL_HILL_CLIMBER:
     def __init__(self):
@@ -15,16 +17,16 @@ class PARALLEL_HILL_CLIMBER:
             self.nextAvailableID = self.nextAvailableID + 1
 
     def Evolve(self):
-        self.Evaluate(self.parents,"parent")
+        self.Evaluate(self.parents)
         for currentGeneration in range(c.numberOfGenerations):
             self.Evolve_For_One_Generation()
 
     def Evolve_For_One_Generation(self):
         self.Spawn()
         self.Mutate()
-        self.Evaluate(self.children,0)
+        self.Evaluate(self.children)
         self.Print()
-        self.Select()        
+        self.Select()       
 
     def Spawn(self):
         self.children = {}
@@ -36,11 +38,11 @@ class PARALLEL_HILL_CLIMBER:
 
     def Mutate(self):
         for child in self.children:
-            self.children[child].Mutate(self.parents[child].myID)
+            self.children[child].Mutate()
 
-    def Evaluate(self,solutions,isfinal):
+    def Evaluate(self,solutions):
         for parent in solutions:
-            solutions[parent].Start_Simulation("DIRECT",0)
+            solutions[parent].Start_Simulation("DIRECT")
         for parent in solutions:
             solutions[parent].Wait_For_Simulation_To_End("DIRECT")
 
@@ -48,6 +50,18 @@ class PARALLEL_HILL_CLIMBER:
         for parent in self.parents:
             if self.children[parent].fitness > self.parents[parent].fitness:
                 self.parents[parent] = self.children[parent]
+                self.parents[parent].fitnessArray.append(self.parents[parent].fitness)
+
+    def Plot(self):
+        for parent in self.parents:
+            array = self.parents[parent].fitnessArray
+            matplotlib.pyplot.plot(array, label=str(self.parents[parent].myID), linewidth=1)
+            #numpy.save("data/Values" + self.parents[parent].myID + ".npy", array, allow_pickle=True, fix_imports=True)
+        #for parent in self.parents:
+        #    backLegSensorValues = numpy.load("data/backLegSensorValues.npy")
+        #    matplotlib.pyplot.plot(backLegSensorValues, label='Back leg', linewidth=3)
+        matplotlib.pyplot.legend()
+        matplotlib.pyplot.show()
 
     def Show_Best(self):
         bestFitness = -1000
@@ -58,7 +72,7 @@ class PARALLEL_HILL_CLIMBER:
             if currFitness > bestFitness:
                 bestFitness = currFitness
                 bestParent = currParent
-        bestParent.Start_Simulation("GUI",1)
+        bestParent.Start_Simulation("GUI")
 
     def Print(self):
         print("\n")
