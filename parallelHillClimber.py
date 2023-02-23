@@ -3,7 +3,7 @@ import constants as c
 import copy
 import os
 import numpy
-import matplotlib.pyplot
+import matplotlib.pyplot as plt
 
 class PARALLEL_HILL_CLIMBER:
     def __init__(self):
@@ -56,13 +56,11 @@ class PARALLEL_HILL_CLIMBER:
     def Plot(self):
         for parent in self.parents:
             array = self.parents[parent].fitnessArray
-            matplotlib.pyplot.plot(array, label=str(parent), linewidth=1)
-            #numpy.save("data/Values" + self.parents[parent].myID + ".npy", array, allow_pickle=True, fix_imports=True)
-        #for parent in self.parents:
-        #    backLegSensorValues = numpy.load("data/backLegSensorValues.npy")
-        #    matplotlib.pyplot.plot(backLegSensorValues, label='Back leg', linewidth=3)
-        matplotlib.pyplot.legend()
-        matplotlib.pyplot.show()
+            plt.plot(array, label=str(parent), linewidth=1)
+        plt.legend()
+        plt.xlabel('Generation')
+        plt.ylabel('Displacement')
+        plt.show()
 
     def Show_Best(self):
         bestFitness = -1000
