@@ -51,7 +51,6 @@ class PARALLEL_HILL_CLIMBER:
             if self.children[parent].fitness > self.parents[parent].fitness:
                 self.parents[parent] = self.children[parent]
             self.parents[parent].fitnessArray.append(self.parents[parent].fitness)
-            print(self.parents[parent].fitnessArray)
 
     def Plot(self):
         for parent in self.parents:

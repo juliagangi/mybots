@@ -10,16 +10,21 @@ class SOLUTION:
     def __init__(self,nextAvailableID):
         self.myID = nextAvailableID
         self.fitnessArray = []
-        self.height = random.randint(1,10)
+        self.height = random.randint(2,10)
         self.numLinks = self.height
         self.links = []
         dirArray = ['-x','+x','-y','+y']
         for i in range(self.height):
-            if random.randint(0,1):
-                dir = dirArray[random.randint(0,3)]
-                length = random.randint(1,5)
-                self.links.append([dir,length])
-                self.numLinks = self.numLinks + length
+            if i == 0:
+                self.links.append(0)
+            else:
+                if random.randint(0,1):
+                    dir = dirArray[random.randint(0,3)]
+                    length = random.randint(1,5)
+                    self.links.append([dir,length])
+                    self.numLinks = self.numLinks + length
+                else:
+                    self.links.append(0)
         self.dims = []
         self.sensors = []
         self.numSensorNeurons = 0
@@ -44,54 +49,33 @@ class SOLUTION:
                 jointAxes[random.randint(0,2)] = 1
             axis = str(jointAxes[0]) + " " + str(jointAxes[1]) + " " + str(jointAxes[2])
             self.axes.append(axis)        
-        '''
-        self.myID = nextAvailableID
-        self.length = random.randint(1,5)
-        self.numJoints = 4*self.length + 12
-        self.numLinks = 4*self.length + 13
-        self.numSensorNeurons = 0
-        self.links = []
-        self.sensors = []
-        self.fitnessArray = []
-        const = random.randint(0,self.numLinks-1)
-        for link in range(self.numLinks):
-            if link == const:
-                self.sensors.append(1)
-                self.numSensorNeurons = self.numSensorNeurons + 1                
-            elif random.randint(0,4) > 1:
-                self.sensors.append(1)
-                self.numSensorNeurons = self.numSensorNeurons + 1
-            else:
-                self.sensors.append(0)
-            self.links.append([random.random(), random.random(), random.random()])
-        self.weights = []
-        self.axes = []
-        for motor in range(self.numJoints):
-            self.weights.append(2*random.random() - 1)
-            jointAxes = [random.randint(0,1), random.randint(0,1), random.randint(0,1)]  
-            if sum(jointAxes) == 0:
-                jointAxes[random.randint(0,2)] = 1
-            axis = str(jointAxes[0]) + " " + str(jointAxes[1]) + " " + str(jointAxes[2])
-            self.axes.append(axis)
-        '''
 
     def Start_Simulation(self,directOrGUI):
         self.Create_World()
         self.Create_Body() 
         self.Create_Brain()
-        #os.system("python3 simulate.py " + directOrGUI + " " + str(self.myID) + " 2&>1 &")
-        os.system("python3 simulate.py " + directOrGUI + " " + str(self.myID) + " &")
+        os.system("python3 simulate.py " + directOrGUI + " " + str(self.myID) + " 2&>1 &")
+        #os.system("python3 simulate.py " + directOrGUI + " " + str(self.myID) + " &")
 
     def Wait_For_Simulation_To_End(self,directOrGUI):
-        while not os.path.exists("fitness/fitness" + str(self.myID) + ".txt"):
-            time.sleep(0.3)
         fitnessFileName = "fitness/fitness" + str(self.myID) + ".txt"
-        fitnessFile = open(fitnessFileName, "r")
+        while not os.path.exists(fitnessFileName):
+            time.sleep(0.01)
+        while True:
+            f = open(fitnessFileName,"r")
+            content = f.read()
+            if content != "":
+                self.fitness = float(content)
+                f.close()
+                break
+            else:
+                f.close()
+        #fitnessFile = open(fitnessFileName, "r")
         #try:
-        self.fitness = float(fitnessFile.read())
+        #self.fitness = float(fitnessFile.read())
         #except: 
         #    return
-        fitnessFile.close()
+        #fitnessFile.close()
         os.system("rm " + fitnessFileName)
 
     def Mutate(self):
@@ -109,7 +93,7 @@ class SOLUTION:
         if rand == 2: # change link dimension
             randlink = random.randint(0,self.numLinks - 1)
             randdir = random.randint(0,2)
-            self.links[randlink][randdir] = 2*random.random() - 1
+            self.dims[randlink][randdir] = 2*random.random() - 1
         if rand == 3: # change random joint axis
             motor = random.randint(0,self.numJoints - 1)
             jointAxes = [random.randint(0,1), random.randint(0,1), random.randint(0,1)]  
@@ -138,7 +122,7 @@ class SOLUTION:
             yPos = 0
             zPos = .5
             zJoint = .5
-            if link == 1:
+            if link > 0:
                 zJoint = 1
             mycolor = "0 0 255 1"
             mycolorname = "Blue"
@@ -146,57 +130,59 @@ class SOLUTION:
                 mycolor = "0 128 0 1"
                 mycolorname = "Green" 
             jointname = str(linkname-1)+"_"+str(linkname)
-            self.joints.append(jointname)
             pyrosim.Send_Cube(name=str(linkname), pos=[xPos,yPos,zPos], size=self.dims[linkname], color=mycolor, colorname=mycolorname)
             if link != 0:
                 pyrosim.Send_Joint(name = jointname, parent= str(linkname-1), child = str(linkname), type = "revolute", position = [0,0,zJoint], jointAxis = self.axes[linkname-1])
+                self.joints.append(jointname)
             linkname = linkname + 1
         for link1 in range(self.height):
-            for link2 in range(self.links[link1][1]):
-                dir = self.dims[link1][0]
-                zJoint = 0
-                zPos = 0
-                if link2 == 0:
-                    zJoint = c.height
-                    prevlink = 0
-                if dir == '-x': 
-                    xPos = -self.dims[linkname][0]*.5
-                    xJoint = -self.dims[prevlink][0]
-                    yPos = 0
-                    yJoint = 0                    
-                    if link == 0:
-                        xJoint = -.5*self.dims[0][0]
-                if dir == '+x':
-                    xPos = self.dims[linkname][0]*.5
-                    xJoint = self.dims[prevlink][0]
-                    yPos = 0
-                    yJoint = 0                    
-                    if link == 0:
-                        xJoint = .5*self.links[0][0]
-                if dir == '-y':
-                    yPos = -self.dims[linkname][1]*.5
-                    yJoint = -self.dims[prevlink][1]
-                    xPos = 0
-                    xJoint = 0                    
-                    if link == 0:
-                        yJoint = -.5*self.dims[0][1]
-                if dir == '+y':
-                    yPos = self.dims[linkname][1]*.5
-                    yJoint = self.dims[prevlink][1]
-                    xPos = 0
-                    xJoint = 0                    
-                    if link == 0:
-                        yJoint = .5*self.dims[0][1]
-                mycolor = "0 0 255 1"
-                mycolorname = "Blue"
-                if self.sensors[linkname]:
-                    mycolor = "0 128 0 1"
-                    mycolorname = "Green" 
-                jointname = str(prevlink)+"_"+str(linkname)
-                self.joints.append(jointname)
-                pyrosim.Send_Cube(name=str(linkname), pos=[xPos,yPos,zPos], size=self.links[linkname], color=mycolor, colorname=mycolorname)
-                pyrosim.Send_Joint(name = jointname, parent= str(prevlink), child = str(linkname), type = "revolute", position = [xJoint,yJoint,zJoint], jointAxis = self.axes[linkname-1])
-                linkname = linkname + 1           
+            if self.links[link1] != 0:
+                for link2 in range(self.links[link1][1]):
+                    dir = self.links[link1][0]
+                    zJoint = 0
+                    zPos = 0
+                    prevlink = linkname - 1
+                    if link2 == 0:
+                        prevlink = link1
+                        zJoint = .5*self.dims[prevlink][2]
+                    if dir == '-x': 
+                        xPos = -self.dims[linkname][0]*.5
+                        xJoint = -self.dims[prevlink][0]
+                        yPos = 0
+                        yJoint = 0                    
+                        if link2 == 0:
+                            xJoint = -.5*self.dims[prevlink][0]
+                    if dir == '+x':
+                        xPos = self.dims[linkname][0]*.5
+                        xJoint = self.dims[prevlink][0]
+                        yPos = 0
+                        yJoint = 0                    
+                        if link2 == 0:
+                            xJoint = .5*self.dims[0][0]
+                    if dir == '-y':
+                        yPos = -self.dims[linkname][1]*.5
+                        yJoint = -self.dims[prevlink][1]
+                        xPos = 0
+                        xJoint = 0                    
+                        if link2 == 0:
+                            yJoint = -.5*self.dims[0][1]
+                    if dir == '+y':
+                        yPos = self.dims[linkname][1]*.5
+                        yJoint = self.dims[prevlink][1]
+                        xPos = 0
+                        xJoint = 0                    
+                        if link2 == 0:
+                            yJoint = .5*self.dims[0][1]
+                    mycolor = "0 0 255 1"
+                    mycolorname = "Blue"
+                    if self.sensors[linkname]:
+                        mycolor = "0 128 0 1"
+                        mycolorname = "Green" 
+                    jointname = str(prevlink)+"_"+str(linkname)
+                    self.joints.append(jointname)
+                    pyrosim.Send_Cube(name=str(linkname), pos=[xPos,yPos,zPos], size=self.dims[linkname], color=mycolor, colorname=mycolorname)
+                    pyrosim.Send_Joint(name = jointname, parent= str(prevlink), child = str(linkname), type = "revolute", position = [xJoint,yJoint,zJoint], jointAxis = self.axes[linkname-1])
+                    linkname = linkname + 1           
         '''
         self.joints = []
         xDim = 1.5
