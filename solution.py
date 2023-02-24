@@ -57,7 +57,7 @@ class SOLUTION:
         os.system("python3 simulate.py " + directOrGUI + " " + str(self.myID) + " 2&>1 &")
         #os.system("python3 simulate.py " + directOrGUI + " " + str(self.myID) + " &")
 
-    def Wait_For_Simulation_To_End(self,directOrGUI):
+    def Wait_For_Simulation_To_End(self):
         fitnessFileName = "fitness/fitness" + str(self.myID) + ".txt"
         while not os.path.exists(fitnessFileName):
             time.sleep(0.01)
@@ -91,9 +91,9 @@ class SOLUTION:
                 curr_sensor = random.randint(0,self.numLinks - 1)
             self.sensors[curr_sensor] = 0
         if rand == 2: # change link dimension
-            randlink = random.randint(0,self.numLinks - 1)
-            randdir = random.randint(0,2)
-            self.dims[randlink][randdir] = 2*random.random() - 1
+            randlink = random.randint(self.height,self.numLinks - 1)
+            randdim = random.randint(0,2)
+            self.dims[randlink][randdim] = 2*random.random() - 1
         if rand == 3: # change random joint axis
             motor = random.randint(0,self.numJoints - 1)
             jointAxes = [random.randint(0,1), random.randint(0,1), random.randint(0,1)]  
@@ -182,124 +182,7 @@ class SOLUTION:
                     self.joints.append(jointname)
                     pyrosim.Send_Cube(name=str(linkname), pos=[xPos,yPos,zPos], size=self.dims[linkname], color=mycolor, colorname=mycolorname)
                     pyrosim.Send_Joint(name = jointname, parent= str(prevlink), child = str(linkname), type = "revolute", position = [xJoint,yJoint,zJoint], jointAxis = self.axes[linkname-1])
-                    linkname = linkname + 1           
-        '''
-        self.joints = []
-        xDim = 1.5
-        yDim = 1.5
-        zDim = .8
-        xPos = 0
-        yPos = 0
-        zPos = c.height
-        mycolor = "0 0 255 1"
-        mycolorname = "Blue"
-        if self.sensors[0]:
-            mycolor = "0 128 0 1"
-            mycolorname = "Green"
-        self.links[0]=[xDim,yDim,zDim]     
-        pyrosim.Send_Cube(name="0", pos=[xPos,yPos,zPos], size=[xDim,yDim,zDim], color=mycolor, colorname=mycolorname)
-        dir_array = ['-x','+x','-y','+y']
-        linkname = 1
-        for i in range(len(dir_array)):
-            for link in range(self.length):
-                prevlink = linkname - 1
-                zJoint = 0
-                zPos = 0
-                if link == 0:
-                    zJoint = c.height
-                    prevlink = 0
-                if dir_array[i] == '-x': 
-                    xPos = -self.links[linkname][0]*.5
-                    xJoint = -self.links[prevlink][0]
-                    yPos = 0
-                    yJoint = 0                    
-                    if link == 0:
-                        xJoint = -.5*self.links[0][0]
-                if dir_array[i] == '+x':
-                    xPos = self.links[linkname][0]*.5
-                    xJoint = self.links[prevlink][0]
-                    yPos = 0
-                    yJoint = 0                    
-                    if link == 0:
-                        xJoint = .5*self.links[0][0]
-                if dir_array[i] == '-y':
-                    yPos = -self.links[linkname][1]*.5
-                    yJoint = -self.links[prevlink][1]
-                    xPos = 0
-                    xJoint = 0                    
-                    if link == 0:
-                        yJoint = -.5*self.links[0][1]
-                if dir_array[i] == '+y':
-                    yPos = self.links[linkname][1]*.5
-                    yJoint = self.links[prevlink][1]
-                    xPos = 0
-                    xJoint = 0                    
-                    if link == 0:
-                        yJoint = .5*self.links[0][1]
-                mycolor = "0 0 255 1"
-                mycolorname = "Blue"
-                if self.sensors[linkname]:
-                    mycolor = "0 128 0 1"
-                    mycolorname = "Green" 
-                jointname = str(prevlink)+"_"+str(linkname)
-                self.joints.append(jointname)
-                pyrosim.Send_Cube(name=str(linkname), pos=[xPos,yPos,zPos], size=self.links[linkname], color=mycolor, colorname=mycolorname)
-                pyrosim.Send_Joint(name = jointname, parent= str(prevlink), child = str(linkname), type = "revolute", position = [xJoint,yJoint,zJoint], jointAxis = self.axes[linkname-1])
-                linkname = linkname + 1
-            height = c.height - .5*self.links[0][2]
-            remainder = height
-            j = 0
-            for j in range(3):
-                xDim = self.links[linkname][0]
-                yDim = self.links[linkname][1]
-                zDim = height/3
-                self.links[linkname][2] = height/3
-                remainder = remainder - zDim
-                xPos = 0
-                yPos = 0
-                zPos = -.5*zDim
-                if self.sensors:
-                    mycolor = "0 128 0 1"
-                    mycolorname = "Green" 
-                else:
-                    mycolor = "0 0 255 1"
-                    mycolorname = "Blue"
-                prevlink = linkname - 1
-                if dir_array[i] == '-x':
-                    xJoint = 0
-                    yJoint = 0
-                    zJoint = -self.links[prevlink][2]
-                    if j == 0:
-                        xJoint = -.5*self.links[prevlink][0]
-                        zJoint = -.5*self.links[prevlink][2]
-                if dir_array[i] == '+x':
-                    xJoint = 0
-                    yJoint = 0
-                    zJoint = -self.links[prevlink][2]
-                    if j == 0:
-                        xJoint = .5*self.links[prevlink][0]
-                        zJoint = -.5*self.links[prevlink][2]
-                if dir_array[i] == '-y':
-                    xJoint = 0
-                    yJoint = 0
-                    zJoint = -self.links[prevlink][2]
-                    if j == 0:
-                        yJoint = -.5*self.links[prevlink][1]
-                        zJoint = -.5*self.links[prevlink][2]
-                if dir_array[i] == '+y':
-                    xJoint = 0
-                    yJoint = 0
-                    zJoint = -self.links[prevlink][2]
-                    if j == 0:
-                        yJoint = .5*self.links[prevlink][1]
-                        zJoint = -.5*self.links[prevlink][2]
-                jointName = str(prevlink)+"_"+str(linkname)
-                self.joints.append(jointName)
-                pyrosim.Send_Cube(name=str(linkname), pos=[xPos,yPos,zPos], size=[xDim,yDim,zDim], color=mycolor, colorname=mycolorname)
-                pyrosim.Send_Joint(name = jointName, parent= str(prevlink), child = str(linkname), type = "revolute", position = [xJoint,yJoint,zJoint], jointAxis = self.axes[linkname-1])
-                linkname = linkname + 1
-                j = j + 1   
-        '''
+                    linkname = linkname + 1
         pyrosim.End()
 
     def Create_Brain(self):

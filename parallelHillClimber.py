@@ -44,7 +44,7 @@ class PARALLEL_HILL_CLIMBER:
         for parent in solutions:
             solutions[parent].Start_Simulation("DIRECT")
         for parent in solutions:
-            solutions[parent].Wait_For_Simulation_To_End("DIRECT")
+            solutions[parent].Wait_For_Simulation_To_End()
 
     def Select(self):
         for parent in self.parents:
