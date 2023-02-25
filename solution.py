@@ -11,8 +11,19 @@ class SOLUTION:
         self.myID = nextAvailableID
         self.fitnessArray = []
         self.dirs = [['-x',0],['+x',0],['-y',0],['+y',0]]
-        self.numLinks = 1
+        dirarray = [0,1,2,3]
+        self.numLinks = 1        
+        numarms = random.randint(1,4)
+        for arm in range(numarms):
+            i = random.randint(0,len(dirarray)-1)
+            index = dirarray[i]
+            numlinks = random.randint(1,5)
+            self.dirs[index][1] = numlinks
+            dirarray.remove(index)
+            self.numLinks = self.numLinks + numlinks
+
         # maybe preset # arms & randomly choose where they go (make sure they have 0 links)
+        '''
         for arr in self.dirs:
             if random.randint(0,1):
                 numlinks = random.randint(1,5)               
@@ -22,18 +33,6 @@ class SOLUTION:
             numlinks = random.randint(1,5)
             self.dirs[random.randint(0,3)][1] = numlinks
             self.numLinks = self.numLinks + numlinks
-        '''
-        for i in range(self.height):
-            if i == 0:
-                self.links.append(0)
-            else:
-                if random.randint(0,1):
-                    dir = dirArray[random.randint(0,3)]
-                    length = random.randint(1,5)
-                    self.links.append([dir,length])
-                    self.numLinks = self.numLinks + length
-                else:
-                    self.links.append(0)
         '''
         self.dims = []
         self.sensors = []
@@ -131,13 +130,17 @@ class SOLUTION:
             self.numLinks = self.numLinks + 1
             self.numJoints = self.numJoints + 1             
         if rand == 4: # remove link
+            print(self.numLinks)
             randlink = random.randint(1,self.numLinks - 1)
             del self.dims[randlink]
             dir = random.randint(0,3)
             currnum = self.dirs[dir][1]
+            i = 0
             while currnum == 0:
                 dir = random.randint(0,3)
                 currnum = self.dirs[dir][1]
+                i = i + 1
+                print("here")
             self.dirs[dir][1] = self.dirs[dir][1]-1              
             if self.sensors[randlink]:
                 self.numSensorNeurons = self.numSensorNeurons - 1

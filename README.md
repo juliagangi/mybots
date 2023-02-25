@@ -15,6 +15,9 @@ The body shape influences the behavior of the robot. A robot with symmetrical ar
 #### Possible Mutations
 There are 6 possible mutations, all with an equal chance of occurring. First, a sensor neuron can be added to a link that doesn't currently have one. Second, a sensor neuron can be removed from a link that currently has one. Third, a random dimension of a random link can be changed. Fourth, a link, with random dimensions, can be added to a random arm. Fourth, a random link can be removed from a random arm. Fifth, the weight of a random motor neuron can be changed. Sixth, a random joint axis can be changed. 
 
+#### Fitness 
+The fitness function calculates the straight-line displacement of the robot's base from (0,0) on the xy plane. It takes the square root of the squared x- and y-components of its location. A robot with a higher displacement has a higher fitness and will be selected for.
+
 ## The Robot
 ![alt text](https://github.com/juliagangi/mybots/blob/3DEvolved/botdiagram.png?raw=true)
 
