@@ -13,7 +13,7 @@ Every link has a 3 in 5 chance of receiving a sensor neuron: if the integer rand
 The body shape influences the behavior of the robot. A robot with symmetrical arms is more likely to move in a constant direction, while a robot where the arms don't all have arms opposite themselves may be more likely to move in a curved trajectory. Furthermore, a robot with longer arms is more likely to topple over and move on its side, while a robot with shorter arms may remain upright while moving.
 
 #### Possible Mutations
-There are 6 possible mutations that can occur, and all have an equal change of occurring. First, a sensor neuron can be added to a link that doesn't currently have one. Second, a sensor neuron can be removed from a link that currently has one. Third, a random dimension of a random link can be changed. Fourth, a link, with random dimensions, can be added to a random arm. Fourth, a random link can be removed from a random arm. Fifth, the weight of a random motor neuron can be changed. Sixth, a random joint axis can be replaced by a randomly-generated axis. 
+There are 6 possible mutations, all with an equal chance of occurring. First, a sensor neuron can be added to a link that doesn't currently have one. Second, a sensor neuron can be removed from a link that currently has one. Third, a random dimension of a random link can be changed. Fourth, a link, with random dimensions, can be added to a random arm. Fourth, a random link can be removed from a random arm. Fifth, the weight of a random motor neuron can be changed. Sixth, a random joint axis can be changed. 
 
 ## The Robot
 ![alt text](https://github.com/juliagangi/mybots/blob/3DEvolved/botdiagram.png?raw=true)
