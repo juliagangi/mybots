@@ -122,7 +122,10 @@ class SOLUTION:
             self.numLinks = self.numLinks + 1
             self.numJoints = self.numJoints + 1             
         if rand == 4: # remove link
-            randlink = random.randint(1,self.numLinks - 1)
+            if self.numLinks > 0:
+                randlink = random.randint(1,self.numLinks - 1)
+            else:
+                return
             del self.dims[randlink]
             dir = random.randint(0,3)
             currnum = self.dirs[dir][1]

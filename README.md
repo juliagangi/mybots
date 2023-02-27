@@ -43,7 +43,7 @@ python3 run.py evolved
 
 ## Videos
 
-Click this link to watch a comparison between a random and evolved creature. 
+Click this link to watch a comparison between random and evolved creatures: <https://youtu.be/O_bXRo4YNG4>
 
 ## Credit
 
