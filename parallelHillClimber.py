@@ -55,17 +55,17 @@ class PARALLEL_HILL_CLIMBER:
     def Plot(self):
         for parent in self.parents:
             array = self.parents[parent].fitnessArray
-            plt.plot(array, label=str(parent), linewidth=1)
+            plt.plot(array, label=str(parent+1), linewidth=1)
         plt.legend()
         plt.xlabel('Generation')
         plt.ylabel('Displacement')
         plt.show()
 
-    def Show_Best(self,array):
+    def Show_Best(self):
         bestFitness = -1000
         bestParent = None
-        for parent in array:
-            currParent = array[parent]
+        for parent in self.parents:
+            currParent = self.parents[parent]
             currFitness = currParent.fitness
             if currFitness > bestFitness:
                 bestFitness = currFitness
