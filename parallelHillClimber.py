@@ -26,7 +26,7 @@ class PARALLEL_HILL_CLIMBER:
         self.Mutate()
         self.Evaluate(self.children)
         self.Print()
-        self.Select()       
+        self.Select()      
 
     def Spawn(self):
         self.children = {}
@@ -61,11 +61,11 @@ class PARALLEL_HILL_CLIMBER:
         plt.ylabel('Displacement')
         plt.show()
 
-    def Show_Best(self):
+    def Show_Best(self,array):
         bestFitness = -1000
         bestParent = None
-        for parent in self.parents:
-            currParent = self.parents[parent]
+        for parent in array:
+            currParent = array[parent]
             currFitness = currParent.fitness
             if currFitness > bestFitness:
                 bestFitness = currFitness

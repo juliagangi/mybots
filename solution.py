@@ -21,17 +21,6 @@ class SOLUTION:
             self.dirs[index][1] = numlinks
             dirarray.remove(index)
             self.numLinks = self.numLinks + numlinks
-        '''
-        for arr in self.dirs:
-            if random.randint(0,1):
-                numlinks = random.randint(1,5)               
-                arr[1] = numlinks
-                self.numLinks = self.numLinks + numlinks
-        if self.dirs[0][1]+self.dirs[1][1]+self.dirs[2][1]+self.dirs[3][1]==0:
-            numlinks = random.randint(1,5)
-            self.dirs[random.randint(0,3)][1] = numlinks
-            self.numLinks = self.numLinks + numlinks
-        '''
         self.dims = []
         self.sensors = []
         self.numSensorNeurons = 0
@@ -54,8 +43,7 @@ class SOLUTION:
             if sum(jointAxes) == 0:
                 jointAxes[random.randint(0,2)] = 1
             axis = str(jointAxes[0]) + " " + str(jointAxes[1]) + " " + str(jointAxes[2])
-            self.axes.append(axis)   
-
+            self.axes.append(axis)  
 
     def Start_Simulation(self,directOrGUI):
         self.Create_World()
@@ -81,6 +69,8 @@ class SOLUTION:
 
     def Mutate(self):
         rand = random.randint(0,6)
+        if self.numLinks < 3:
+            rand = random.randint(0,5)
         if rand == 0: # add sensor neuron
             i = 0
             new_sensor = random.randint(0,self.numLinks - 1)
@@ -121,11 +111,18 @@ class SOLUTION:
             self.weights.insert(randlink-1,2*random.random()-1)
             self.numLinks = self.numLinks + 1
             self.numJoints = self.numJoints + 1             
-        if rand == 4: # remove link
-            if self.numLinks > 0:
-                randlink = random.randint(1,self.numLinks - 1)
-            else:
-                return
+        if rand == 4: # change random joint's weight
+            motor = random.randint(0,self.numJoints - 1)
+            self.weights[motor] = 2*random.random() - 1         
+        if rand == 5: # change random joint axis
+            motor = random.randint(0,self.numJoints - 1)
+            jointAxes = [random.randint(0,1), random.randint(0,1), random.randint(0,1)]  
+            if sum(jointAxes) == 0:
+                jointAxes[random.randint(0,2)] = 1
+            axis = str(jointAxes[0]) + " " + str(jointAxes[1]) + " " + str(jointAxes[2])
+            self.axes[motor] = axis
+        if rand == 6: # remove link
+            randlink = random.randint(1,self.numLinks - 1)
             del self.dims[randlink]
             dir = random.randint(0,3)
             currnum = self.dirs[dir][1]
@@ -142,18 +139,7 @@ class SOLUTION:
             del self.weights[randlink-1]
             self.numLinks = self.numLinks - 1
             self.numJoints = self.numJoints - 1 
-        if rand == 5: # change random joint's weight
-            motor = random.randint(0,self.numJoints - 1)
-            self.weights[motor] = 2*random.random() - 1         
-        if rand == 6: # change random joint axis
-            motor = random.randint(0,self.numJoints - 1)
-            jointAxes = [random.randint(0,1), random.randint(0,1), random.randint(0,1)]  
-            if sum(jointAxes) == 0:
-                jointAxes[random.randint(0,2)] = 1
-            axis = str(jointAxes[0]) + " " + str(jointAxes[1]) + " " + str(jointAxes[2])
-            self.axes[motor] = axis
  
-
     def Set_ID(self,ID):
         self.myID = ID
 
@@ -186,7 +172,6 @@ class SOLUTION:
                 if item == 0:
                     prevlink = 0
                 if direction == '-x':
-                    axis = "0 1 0"
                     xPos = -.5*self.dims[linkname][0]
                     yPos = 0
                     zPos = .5*self.dims[linkname][2]
@@ -197,7 +182,6 @@ class SOLUTION:
                         xJoint = -.5*self.dims[0][0]
                         zJoint = self.dims[0][2]
                 if direction == '+x':
-                    axis = "0 1 0"
                     xPos = .5*self.dims[linkname][0]
                     yPos = 0
                     zPos = .5*self.dims[linkname][2]
@@ -208,7 +192,6 @@ class SOLUTION:
                         xJoint = .5*self.dims[0][0]
                         zJoint = self.dims[0][2]
                 if direction == '-y':
-                    axis = "1 0 0"
                     xPos = 0
                     yPos = -.5*self.dims[linkname][1]
                     zPos = .5*self.dims[linkname][2]
@@ -219,7 +202,6 @@ class SOLUTION:
                         yJoint = -.5*self.dims[0][0]
                         zJoint = self.dims[0][2]
                 if direction == '+y':
-                    axis = "1 0 0"
                     xPos = 0
                     yPos = .5*self.dims[linkname][1]
                     zPos = .5*self.dims[linkname][2]
