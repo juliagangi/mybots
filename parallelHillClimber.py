@@ -12,12 +12,14 @@ class PARALLEL_HILL_CLIMBER:
         os.system("rm body/body*.urdf")
         self.parents = {}
         self.nextAvailableID = 0
+        self.fitnessArr = []
         for i in range(c.populationSize):
             self.parents[i] = SOLUTION(self.nextAvailableID)
             self.nextAvailableID = self.nextAvailableID + 1
 
     def Evolve(self):
         self.Evaluate(self.parents)
+        self.Get_Best()
         for currentGeneration in range(c.numberOfGenerations):
             self.Evolve_For_One_Generation()
 
@@ -26,7 +28,8 @@ class PARALLEL_HILL_CLIMBER:
         self.Mutate()
         self.Evaluate(self.children)
         self.Print()
-        self.Select()      
+        self.Select()  
+        self.Get_Best()    
 
     def Spawn(self):
         self.children = {}
@@ -71,6 +74,15 @@ class PARALLEL_HILL_CLIMBER:
                 bestFitness = currFitness
                 bestParent = currParent
         bestParent.Start_Simulation("GUI")
+
+    def Get_Best(self):
+        bestFitness = -1000
+        for parent in self.parents:
+            currParent = self.parents[parent]
+            currFitness = currParent.fitness
+            if currFitness > bestFitness:
+                bestFitness = currFitness
+        self.fitnessArr.append(bestFitness)
 
     def Print(self):
         print("\n")

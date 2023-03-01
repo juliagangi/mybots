@@ -8,7 +8,7 @@ import constants as c
 
 class SOLUTION:
     def __init__(self,nextAvailableID):
-        random.seed(nextAvailableID+1)
+        #random.seed(nextAvailableID+1)
         self.myID = nextAvailableID
         self.fitnessArray = []
         self.dirs = [['-x',0],['+x',0],['-y',0],['+y',0]]
