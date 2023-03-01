@@ -18,6 +18,8 @@ There are 7 possible mutations, all with an equal chance of occurring. First, a 
 #### Fitness 
 The fitness function calculates the straight-line displacement of the robot's base from (0,0) on the xy plane. It takes the square root of the squared x- and y-components of its location. A robot with a higher displacement has a higher fitness and will be selected for.
 
+![alt text](https://github.com/juliagangi/mybots/blob/3DEvolved/finalplot.png?raw=true)
+
 ## The Robot
 ![alt text](https://github.com/juliagangi/mybots/blob/3DEvolved/botdiagram.png?raw=true)
 
