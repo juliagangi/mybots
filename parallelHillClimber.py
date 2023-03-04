@@ -17,19 +17,19 @@ class PARALLEL_HILL_CLIMBER:
             self.parents[i] = SOLUTION(self.nextAvailableID)
             self.nextAvailableID = self.nextAvailableID + 1
 
-    def Evolve(self):
-        self.Evaluate(self.parents)
+    def Evolve(self,flag):
+        self.Evaluate(self.parents,flag)
         self.Get_Best()
         for currentGeneration in range(c.numberOfGenerations):
-            self.Evolve_For_One_Generation()
+            self.Evolve_For_One_Generation(flag)
 
-    def Evolve_For_One_Generation(self):
+    def Evolve_For_One_Generation(self,flag):
         self.Spawn()
-        self.Mutate()
-        self.Evaluate(self.children)
+        self.Mutate(flag)
+        self.Evaluate(self.children,flag)
         self.Print()
         self.Select()  
-        self.Get_Best()    
+        self.Update_Fitness()    
 
     def Spawn(self):
         self.children = {}
@@ -39,13 +39,13 @@ class PARALLEL_HILL_CLIMBER:
             self.children[parent] = newChild
             self.nextAvailableID = self.nextAvailableID + 1
 
-    def Mutate(self):
+    def Mutate(self,flag):
         for child in self.children:
-            self.children[child].Mutate()
+            self.children[child].Mutate(flag)
 
-    def Evaluate(self,solutions):
+    def Evaluate(self,solutions,flag):
         for parent in solutions:
-            solutions[parent].Start_Simulation("DIRECT")
+            solutions[parent].Start_Simulation("DIRECT",flag)
         for parent in solutions:
             solutions[parent].Wait_For_Simulation_To_End()
 
@@ -53,7 +53,6 @@ class PARALLEL_HILL_CLIMBER:
         for parent in self.parents:
             if self.children[parent].fitness > self.parents[parent].fitness:
                 self.parents[parent] = self.children[parent]
-            self.parents[parent].fitnessArray.append(self.parents[parent].fitness)
 
     def Plot(self):
         for parent in self.parents:
@@ -64,18 +63,17 @@ class PARALLEL_HILL_CLIMBER:
         plt.ylabel('Displacement')
         plt.show()
 
-    def Show_Best(self):
+    def Show_Best(self,parents,flag):
         bestFitness = -1000
         bestParent = None
-        for parent in self.parents:
-            currParent = self.parents[parent]
-            currFitness = currParent.fitness
+        for parent in parents:
+            currFitness = parent.fitness
             if currFitness > bestFitness:
                 bestFitness = currFitness
-                bestParent = currParent
-        bestParent.Start_Simulation("GUI")
+                bestParent = parent
+        bestParent.Start_Simulation("GUI",flag)
 
-    def Get_Best(self):
+    def Update_Fitness(self):
         bestFitness = -1000
         for parent in self.parents:
             currParent = self.parents[parent]
@@ -83,6 +81,17 @@ class PARALLEL_HILL_CLIMBER:
             if currFitness > bestFitness:
                 bestFitness = currFitness
         self.fitnessArr.append(bestFitness)
+
+    def Best_Parent(self):
+        bestFitness = -1000
+        bestParent = None
+        for parent in self.parents:
+            currParent = self.parents[parent]
+            currFitness = currParent.fitness
+            if currFitness > bestFitness:
+                bestFitness = currFitness
+                bestParent = currParent 
+        return bestParent
 
     def Print(self):
         print("\n")

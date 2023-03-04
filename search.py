@@ -1,29 +1,35 @@
 from parallelHillClimber import PARALLEL_HILL_CLIMBER
-import os
 import random
 import constants as c
 import matplotlib.pyplot as plt
-import time
 
+best1 = []
 for i in range(5):
     random.seed(i+1)
     phc = PARALLEL_HILL_CLIMBER()
-    phc.Evolve()
+    phc.Evolve('control')
     plt.plot(phc.fitnessArr, label=str(i+1), linewidth=1)
-    #phc.Show_Best()
-    #time.sleep(5)
+    best1.append(phc.Best_Parent())
 plt.legend()
 plt.xlabel('Generation')
 plt.ylabel('Displacement')
 plt.show()
-'''
+
+
+best2 = []
 for i in range(5):
-    random.seed(i+6)
+    random.seed(i+1)
     phc = PARALLEL_HILL_CLIMBER()
-    phc.Evolve()
-    for parent in phc.parents:
-        parent.
-    plot_array.append()
-phc.Show_Best() 
-phc.Plot()
-'''
+    phc.Evolve('notcontrol')
+    plt.plot(phc.fitnessArr, label=str(i+1), linewidth=1)
+    best2.append(phc.Best_Parent())
+plt.legend()
+plt.xlabel('Generation')
+plt.ylabel('Displacement')
+plt.show()
+
+input("Press Enter to Continue")
+phc.Show_Best(best1,'control')
+input("Press Enter to Continue")
+phc.Show_Best(best2,'notcontrol')
+

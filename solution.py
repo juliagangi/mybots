@@ -13,7 +13,8 @@ class SOLUTION:
         self.fitnessArray = []
         self.dirs = [['-x',0],['+x',0],['-y',0],['+y',0]]
         dirarray = [0,1,2,3]
-        self.numLinks = 1        
+        self.numLinks = 1 
+        self.numHiddenNeurons = 2        
         numarms = random.randint(1,4)
         for arm in range(numarms):
             i = random.randint(0,len(dirarray)-1)
@@ -25,7 +26,10 @@ class SOLUTION:
         self.dims = []
         self.sensors = []
         self.numSensorNeurons = 0
+        self.sweights = []
         for link in range(self.numLinks):
+            for hneuron in range(self.numHiddenNeurons):
+                self.sweights.append(random.random()*2-1)
             if random.randint(0,4) > 1:
                 self.sensors.append(1)
                 self.numSensorNeurons = self.numSensorNeurons + 1
@@ -35,21 +39,27 @@ class SOLUTION:
             if link == 0:
                 dims=[.7,.7,.7]
             self.dims.append(dims)
+        if self.numSensorNeurons == 0:
+            self.numSensorNeurons = 1
+            self.sensors[random.randint(0,len(self.sensors)-1)] = 1
         self.numJoints = self.numLinks - 1
+        self.mweights = []
+        self.axes = []       
         self.weights = []
-        self.axes = []
         for motor in range(self.numJoints):
-            self.weights.append(2*random.random() - 1)
+            self.weights.append(random.random()*2-1)
+            for hneuron in range(self.numHiddenNeurons):
+                self.mweights.append(random.random()*2-1)
             jointAxes = [random.randint(0,1), random.randint(0,1), random.randint(0,1)]  
             if sum(jointAxes) == 0:
                 jointAxes[random.randint(0,2)] = 1
             axis = str(jointAxes[0]) + " " + str(jointAxes[1]) + " " + str(jointAxes[2])
-            self.axes.append(axis)  
-
-    def Start_Simulation(self,directOrGUI):
+            self.axes.append(axis)
+ 
+    def Start_Simulation(self,directOrGUI,flag):
         self.Create_World()
         self.Create_Body() 
-        self.Create_Brain()
+        self.Create_Brain(flag)
         os.system("python3 simulate.py " + directOrGUI + " " + str(self.myID) + " 2&>1 &")
         #os.system("python3 simulate.py " + directOrGUI + " " + str(self.myID) + " &")
 
@@ -68,78 +78,165 @@ class SOLUTION:
                 f.close()
         os.system("rm " + fitnessFileName)
 
-    def Mutate(self):
+    def Mutate(self,flag):
         rand = random.randint(0,6)
         if self.numLinks < 3:
             rand = random.randint(0,5)
-        if rand == 0: # add sensor neuron
-            i = 0
-            new_sensor = random.randint(0,self.numLinks - 1)
-            while self.sensors[new_sensor] == 1:
+        if flag == 'control':
+            if rand == 0: # add sensor neuron
+                i = 0
                 new_sensor = random.randint(0,self.numLinks - 1)
-                i = i + 1
-                if i == 5:
-                    break
-            self.sensors[new_sensor] = 1
-        if rand == 1: # remove sensor neuron
-            i = 0
-            curr_sensor = random.randint(0,self.numLinks - 1)
-            while self.sensors[curr_sensor] == 0:
-                i = i + 1
-                if i == 5:
-                    break
+                while self.sensors[new_sensor] == 1:
+                    new_sensor = random.randint(0,self.numLinks - 1)
+                    i = i + 1
+                    if i == 5:
+                        break
+                self.sensors[new_sensor] = 1
+            if rand == 1: # remove sensor neuron
+                if self.numSensorNeurons == 1:
+                    return
+                i = 0
                 curr_sensor = random.randint(0,self.numLinks - 1)
-            self.sensors[curr_sensor] = 0
-        if rand == 2: # change link dimension
-            randlink = random.randint(1,self.numLinks - 1)
-            randdim = random.randint(0,2)
-            self.dims[randlink][randdim] = random.random()
-        if rand == 3: # add link
-            randlink = random.randint(1,self.numLinks - 1)
-            self.dims.insert(randlink,[random.random(),random.random(),random.random()])
-            dir = random.randint(0,3)
-            self.dirs[dir][1] = self.dirs[dir][1]+1
-            if random.randint(0,4) > 1:
-                self.sensors.insert(randlink,1)
-                self.numSensorNeurons = self.numSensorNeurons + 1
-            else:
-                self.sensors.insert(randlink,0)
-            jointAxes = [random.randint(0,1), random.randint(0,1), random.randint(0,1)]  
-            if sum(jointAxes) == 0:
-                jointAxes[random.randint(0,2)] = 1
-            axis = str(jointAxes[0]) + " " + str(jointAxes[1]) + " " + str(jointAxes[2])
-            self.axes.insert(randlink-1, axis)
-            self.weights.insert(randlink-1,2*random.random()-1)
-            self.numLinks = self.numLinks + 1
-            self.numJoints = self.numJoints + 1             
-        if rand == 4: # change random joint's weight
-            motor = random.randint(0,self.numJoints - 1)
-            self.weights[motor] = 2*random.random() - 1         
-        if rand == 5: # change random joint axis
-            motor = random.randint(0,self.numJoints - 1)
-            jointAxes = [random.randint(0,1), random.randint(0,1), random.randint(0,1)]  
-            if sum(jointAxes) == 0:
-                jointAxes[random.randint(0,2)] = 1
-            axis = str(jointAxes[0]) + " " + str(jointAxes[1]) + " " + str(jointAxes[2])
-            self.axes[motor] = axis
-        if rand == 6: # remove link
-            randlink = random.randint(1,self.numLinks - 1)
-            del self.dims[randlink]
-            dir = random.randint(0,3)
-            currnum = self.dirs[dir][1]
-            i = 0
-            while currnum == 0:
+                while self.sensors[curr_sensor] == 0:
+                    i = i + 1
+                    if i == 5:
+                        break
+                    curr_sensor = random.randint(0,self.numLinks - 1)
+                self.sensors[curr_sensor] = 0
+            if rand == 2: # change link dimension
+                randlink = random.randint(1,self.numLinks - 1)
+                randdim = random.randint(0,2)
+                self.dims[randlink][randdim] = random.random()
+            if rand == 3: # add link
+                randlink = random.randint(1,self.numLinks - 1)
+                self.dims.insert(randlink,[random.random(),random.random(),random.random()])
+                dir = random.randint(0,3)
+                self.dirs[dir][1] = self.dirs[dir][1]+1
+                if random.randint(0,4) > 1:
+                    self.sensors.insert(randlink,1)
+                    self.numSensorNeurons = self.numSensorNeurons + 1
+                else:
+                    self.sensors.insert(randlink,0)
+                jointAxes = [random.randint(0,1), random.randint(0,1), random.randint(0,1)]  
+                if sum(jointAxes) == 0:
+                    jointAxes[random.randint(0,2)] = 1
+                axis = str(jointAxes[0]) + " " + str(jointAxes[1]) + " " + str(jointAxes[2])
+                self.axes.insert(randlink-1, axis)
+                self.weights.insert(randlink-1,2*random.random()-1)
+                self.numLinks = self.numLinks + 1
+                self.numJoints = self.numJoints + 1             
+            if rand == 4: # change random joint's weight
+                motor = random.randint(0,self.numJoints - 1)
+                self.weights[motor] = 2*random.random() - 1          
+            if rand == 5: # change random joint axis
+                motor = random.randint(0,self.numJoints - 1)
+                jointAxes = [random.randint(0,1), random.randint(0,1), random.randint(0,1)]  
+                if sum(jointAxes) == 0:
+                    jointAxes[random.randint(0,2)] = 1
+                axis = str(jointAxes[0]) + " " + str(jointAxes[1]) + " " + str(jointAxes[2])
+                self.axes[motor] = axis
+            if rand == 6: # remove link
+                randlink = random.randint(1,self.numLinks - 1)
+                del self.dims[randlink]
                 dir = random.randint(0,3)
                 currnum = self.dirs[dir][1]
-                i = i + 1
-            self.dirs[dir][1] = self.dirs[dir][1]-1              
-            if self.sensors[randlink]:
-                self.numSensorNeurons = self.numSensorNeurons - 1
-            del self.sensors[randlink]
-            del self.axes[randlink-1]
-            del self.weights[randlink-1]
-            self.numLinks = self.numLinks - 1
-            self.numJoints = self.numJoints - 1 
+                i = 0
+                while currnum == 0:
+                    dir = random.randint(0,3)
+                    currnum = self.dirs[dir][1]
+                    i = i + 1
+                self.dirs[dir][1] = self.dirs[dir][1]-1              
+                if self.sensors[randlink]:
+                    self.numSensorNeurons = self.numSensorNeurons - 1
+                del self.sensors[randlink]
+                del self.axes[randlink-1]
+                del self.weights[randlink-1]
+                self.numLinks = self.numLinks - 1
+                self.numJoints = self.numJoints - 1 
+        else:
+            if self.numLinks < 3:
+                rand = random.randint(0,5)
+            if rand == 0: # add sensor neuron
+                i = 0
+                new_sensor = random.randint(0,self.numLinks - 1)
+                while self.sensors[new_sensor] == 1:
+                    new_sensor = random.randint(0,self.numLinks - 1)
+                    i = i + 1
+                    if i == 5:
+                        break
+                self.sensors[new_sensor] = 1
+            if rand == 1: # remove sensor neuron
+                if self.numSensorNeurons == 1:
+                    return
+                i = 0
+                curr_sensor = random.randint(0,self.numLinks - 1)
+                while self.sensors[curr_sensor] == 0:
+                    i = i + 1
+                    if i == 5:
+                        break
+                    curr_sensor = random.randint(0,self.numLinks - 1)
+                self.sensors[curr_sensor] = 0
+            if rand == 2: # change link dimension
+                randlink = random.randint(1,self.numLinks - 1)
+                randdim = random.randint(0,2)
+                self.dims[randlink][randdim] = random.random()
+            if rand == 3: # add link
+                randlink = random.randint(1,self.numLinks - 1)
+                self.dims.insert(randlink,[random.random(),random.random(),random.random()])
+                dir = random.randint(0,3)
+                self.dirs[dir][1] = self.dirs[dir][1]+1
+                if random.randint(0,4) > 1:
+                    self.sensors.insert(randlink,1)
+                    self.numSensorNeurons = self.numSensorNeurons + 1
+                else:
+                    self.sensors.insert(randlink,0)
+                jointAxes = [random.randint(0,1), random.randint(0,1), random.randint(0,1)]  
+                if sum(jointAxes) == 0:
+                    jointAxes[random.randint(0,2)] = 1
+                axis = str(jointAxes[0]) + " " + str(jointAxes[1]) + " " + str(jointAxes[2])
+                self.axes.insert(randlink-1, axis)
+                for neuron in range(self.numHiddenNeurons):
+                    self.sweights.insert(randlink+neuron,2*random.random()-1)
+                    self.mweights.insert(randlink-1+neuron,2*random.random()-1)
+                self.numLinks = self.numLinks + 1
+                self.numJoints = self.numJoints + 1             
+            if rand == 4: # change random joint's weight
+                if random.randint(0,1):
+                    motor = random.randint(0,self.numJoints - 1)
+                    for neuron in range(self.numHiddenNeurons):
+                        self.mweights[motor+neuron] = 2*random.random() - 1    
+                else:
+                    sensor = random.randint(0,self.numSensorNeurons - 1)
+                    for neuron in range(self.numHiddenNeurons):
+                        self.sweights[sensor+neuron] = 2*random.random() - 1        
+            if rand == 5: # change random joint axis
+                motor = random.randint(0,self.numJoints - 1)
+                jointAxes = [random.randint(0,1), random.randint(0,1), random.randint(0,1)]  
+                if sum(jointAxes) == 0:
+                    jointAxes[random.randint(0,2)] = 1
+                axis = str(jointAxes[0]) + " " + str(jointAxes[1]) + " " + str(jointAxes[2])
+                self.axes[motor] = axis
+            if rand == 6: # remove link
+                randlink = random.randint(1,self.numLinks - 1)
+                del self.dims[randlink]
+                dir = random.randint(0,3)
+                currnum = self.dirs[dir][1]
+                i = 0
+                while currnum == 0:
+                    dir = random.randint(0,3)
+                    currnum = self.dirs[dir][1]
+                    i = i + 1
+                self.dirs[dir][1] = self.dirs[dir][1]-1              
+                if self.sensors[randlink]:
+                    self.numSensorNeurons = self.numSensorNeurons - 1
+                del self.sensors[randlink]
+                del self.axes[randlink-1]
+                for neuron in range(self.numHiddenNeurons):
+                    del self.mweights[randlink-1+neuron]
+                    del self.sweights[randlink+neuron]
+                self.numLinks = self.numLinks - 1
+                self.numJoints = self.numJoints - 1 
+
  
     def Set_ID(self,ID):
         self.myID = ID
@@ -219,7 +316,7 @@ class SOLUTION:
                 linkname = linkname + 1
         pyrosim.End()
 
-    def Create_Brain(self):
+    def Create_Brain(self,flag):
         pyrosim.Start_NeuralNetwork("brain/brain" + str(self.myID) + ".nndf")
         i = 0
         for i in range(len(self.sensors)):
@@ -227,15 +324,30 @@ class SOLUTION:
                 pyrosim.Send_Sensor_Neuron(name = i, linkName = str(i))
         j = 0
         i = i + 1
-        for joint in self.joints:
-            pyrosim.Send_Motor_Neuron(name = i, jointName = joint)
-            split = joint.split('_')
-            link0 = int(split[0])
-            link1 = int(split[1])
-            if self.sensors[link0]:
-                pyrosim.Send_Synapse(sourceNeuronName = link0, targetNeuronName = i+self.numSensorNeurons, weight = self.weights[j])
-            if self.sensors[link1]:
-                pyrosim.Send_Synapse(sourceNeuronName = link1, targetNeuronName = i+self.numSensorNeurons, weight = self.weights[j])
-            j = j + 1
-            i = i + 1
+        if flag == 'control':
+            for joint in self.joints:
+                pyrosim.Send_Motor_Neuron(name = i, jointName = joint)
+                split = joint.split('_')
+                link0 = int(split[0])
+                link1 = int(split[1])
+                if self.sensors[link0]:
+                    pyrosim.Send_Synapse(sourceNeuronName = link0, targetNeuronName = i, weight = self.weights[j])
+                if self.sensors[link1]:
+                    pyrosim.Send_Synapse(sourceNeuronName = link1, targetNeuronName = i, weight = self.weights[j])
+                j = j + 1
+                i = i + 1
+        else:
+            hidden = i
+            for neuron in range(self.numHiddenNeurons):
+                pyrosim.Send_Hidden_Neuron(name = i)
+                i = i + 1
+            for sensor in range(len(self.sensors)):
+                if self.sensors[sensor]:
+                    for neuron in range(self.numHiddenNeurons):
+                        pyrosim.Send_Synapse(sourceNeuronName = sensor, targetNeuronName = hidden+neuron, weight = self.sweights[sensor+neuron])
+            for joint in range(len(self.joints)):
+                pyrosim.Send_Motor_Neuron(name = i, jointName = self.joints[joint])
+                for neuron in range(self.numHiddenNeurons):
+                    pyrosim.Send_Synapse(sourceNeuronName = hidden+neuron, targetNeuronName = i, weight = self.mweights[joint+neuron])
+                i = i + 1
         pyrosim.End()
