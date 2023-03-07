@@ -19,7 +19,7 @@ class PARALLEL_HILL_CLIMBER:
 
     def Evolve(self,flag):
         self.Evaluate(self.parents,flag)
-        self.Get_Best()
+        self.Update_Fitness()
         for currentGeneration in range(c.numberOfGenerations):
             self.Evolve_For_One_Generation(flag)
 

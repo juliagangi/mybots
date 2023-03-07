@@ -4,47 +4,55 @@ import constants as c
 import matplotlib.pyplot as plt
 import numpy as np
 
+colors = ['blue','orange','green','red','purple']
 best1 = []
 for i in range(5):
     random.seed(i+1)
     phc = PARALLEL_HILL_CLIMBER(5)
     phc.Evolve('control')
-    plt.plot(phc.fitnessArr, label=str(i+1), linewidth=1)
+    plt.plot(phc.fitnessArr, label=str(i+1), color=colors[i], linewidth=1)
+    x = np.arange(0,c.numberOfGenerations+1,1)
+    ci = 1.96 * np.std(phc.fitnessArr)/np.sqrt(len(x))
+    plt.fill_between(x,(phc.fitnessArr-ci), (phc.fitnessArr+ci), color=colors[i], alpha=0.1)
     best1.append(phc.Best_Parent())
-ci = 0.1 * np.std(best1) / np.mean(best1)
 plt.legend()
 plt.xlabel('Generation')
 plt.ylabel('Displacement')
-plt.fill_between((best1-ci), (best1+ci))#, alpha=0.5)
+plt.title('Evolution: Control')
 plt.savefig('plot1')
+plt.cla()
 
-exit()
 best2 = []
 for i in range(5):
     random.seed(i+1)
     phc = PARALLEL_HILL_CLIMBER(9)
     phc.Evolve('control')
-    plt.plot(phc.fitnessArr, label=str(i+1), linewidth=1)
-    best2.append(phc.Best_Parent())
-ci = 0.1 * np.std(best2) / np.mean(best2)
+    plt.plot(phc.fitnessArr, label=str(i+1), color=colors[i], linewidth=1)
+    x = np.arange(0,c.numberOfGenerations+1,1)
+    ci = 1.96 * np.std(phc.fitnessArr)/np.sqrt(len(x))
+    plt.fill_between(x,(phc.fitnessArr-ci), (phc.fitnessArr+ci), color=colors[i], alpha=0.1)
+    best1.append(phc.Best_Parent())
 plt.legend()
 plt.xlabel('Generation')
 plt.ylabel('Displacement')
-plt.fill_between((best2-ci), (best2+ci))#, alpha=0.5)
+plt.title('Evolution: Experiment #1')
 plt.savefig('plot2')
+plt.cla()
 
 best3 = []
 for i in range(5):
     random.seed(i+1)
     phc = PARALLEL_HILL_CLIMBER(5)
     phc.Evolve('notcontrol')
-    plt.plot(phc.fitnessArr, label=str(i+1), linewidth=1)
-    best3.append(phc.Best_Parent())
-ci = 0.1 * np.std(best3) / np.mean(best3)
+    plt.plot(phc.fitnessArr, label=str(i+1), color=colors[i], linewidth=1)
+    x = np.arange(0,c.numberOfGenerations+1,1)
+    ci = 1.96 * np.std(phc.fitnessArr)/np.sqrt(len(x))
+    plt.fill_between(x,(phc.fitnessArr-ci), (phc.fitnessArr+ci), color=colors[i], alpha=0.1)
+    best1.append(phc.Best_Parent())
 plt.legend()
 plt.xlabel('Generation')
 plt.ylabel('Displacement')
-plt.fill_between((best3-ci), (best3+ci))#, alpha=0.5)
+plt.title('Evolution: Experiment #2')
 plt.savefig('plot3')
 
 input("Press Enter to Continue")
