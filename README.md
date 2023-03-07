@@ -12,7 +12,7 @@ My creature originates from a central link, with a fixed size, and has arms that
 ## Experimental Robot #1
 The only difference between the control and the first experimental robot is that the number of links in each arm is constrained by [1,9] - the upper bound has been increased by 4. 
 
-![alt text](https://github.com/juliagangi/mybots/blob/finalExperiment/fullbody.png?raw=true)
+![alt text](https://github.com/juliagangi/mybots/blob/finalExperiment/thebody.png?raw=true)
 
 ## The Brain
 #### Control & Experimental Robot #1
