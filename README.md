@@ -36,6 +36,19 @@ The fitness function calculates the straight-line displacement of the robot's ba
 
 ## A/B Testing
 #### My Hypothesis
+I hypothesize that adding a hidden neural network with 2 hidden neurons will result in improved locomotion, as compared to control with a neural network containing only sensor and motor neurons. 
+
+###### Why?
+In my code, there is an upper limit of 5 on the number of links in each arm. I have noticed that the most successful creature at the end of every run is very elongated, as robots with longer limbs were selected for. The body seemed to evolve to support efficient locomotion, so I decided to test whether a fundamental change in the brain would improve locomotion even more.
+
+#### The Testing
+I tested my hypothesis with 2 different runs. Each run involved testing the control and the mutated creature. Each of these involved a loop that occurred 5 times, with the random seed incremented each time, and each loop simulated a population size of 25 over 200 generations. For example, for the first run, the control was simulated (pop. 25, gens. 200) with random seed 1, 2, 3, 4, and finally 5. Meanwhile, the mutated creature was simulated with the same parameters and the same random seeds (1-5) to ensure that the populations were identical except for the hidden neural network. For the second run, the random seeds were 6, 7, 8, 9, 10.     
+
+#### The Result
+My experiment found great results, with the distance traveled from the origin doubling for some runs. The graphs below compare the control and mutated creature for each run. It can be observed from the legend that for each runs, the most successful creature for the mutated robot came from a different random seed than the control robot did.  
+
+###### The Graphs
+
 
 ## Running It
 First, clone my repo to your computer.
