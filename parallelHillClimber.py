@@ -6,7 +6,7 @@ import numpy
 import matplotlib.pyplot as plt
 
 class PARALLEL_HILL_CLIMBER:
-    def __init__(self):
+    def __init__(self,upperlimit):
         os.system("rm brain/brain*.nndf")
         os.system("rm fitness/fitness*.txt")
         os.system("rm body/body*.urdf")
@@ -14,7 +14,7 @@ class PARALLEL_HILL_CLIMBER:
         self.nextAvailableID = 0
         self.fitnessArr = []
         for i in range(c.populationSize):
-            self.parents[i] = SOLUTION(self.nextAvailableID)
+            self.parents[i] = SOLUTION(self.nextAvailableID,upperlimit)
             self.nextAvailableID = self.nextAvailableID + 1
 
     def Evolve(self,flag):

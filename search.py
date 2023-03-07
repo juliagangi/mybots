@@ -6,7 +6,7 @@ import matplotlib.pyplot as plt
 best1 = []
 for i in range(5):
     random.seed(i+1)
-    phc = PARALLEL_HILL_CLIMBER()
+    phc = PARALLEL_HILL_CLIMBER(5)
     phc.Evolve('control')
     plt.plot(phc.fitnessArr, label=str(i+1), linewidth=1)
     best1.append(phc.Best_Parent())
@@ -19,7 +19,7 @@ plt.show()
 best2 = []
 for i in range(5):
     random.seed(i+1)
-    phc = PARALLEL_HILL_CLIMBER()
+    phc = PARALLEL_HILL_CLIMBER(5)
     phc.Evolve('notcontrol')
     plt.plot(phc.fitnessArr, label=str(i+1), linewidth=1)
     best2.append(phc.Best_Parent())

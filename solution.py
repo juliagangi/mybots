@@ -7,7 +7,7 @@ import time
 import constants as c
 
 class SOLUTION:
-    def __init__(self,nextAvailableID):
+    def __init__(self,nextAvailableID,upperlimit):
         #random.seed(nextAvailableID+1)
         self.myID = nextAvailableID
         self.fitnessArray = []
@@ -19,7 +19,7 @@ class SOLUTION:
         for arm in range(numarms):
             i = random.randint(0,len(dirarray)-1)
             index = dirarray[i]
-            numlinks = random.randint(1,5)
+            numlinks = random.randint(1,upperlimit)
             self.dirs[index][1] = numlinks
             dirarray.remove(index)
             self.numLinks = self.numLinks + numlinks
