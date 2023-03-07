@@ -7,8 +7,8 @@ import matplotlib.pyplot as plt
 
 class PARALLEL_HILL_CLIMBER:
     def __init__(self):
-        os.system("rm brain/brain*.nndf")
-        os.system("rm fitness/fitness*.txt")
+        #os.system("rm brain/brain*.nndf")
+        #os.system("rm fitness/fitness*.txt")
         os.system("rm body/body*.urdf")
         self.parents = {}
         self.nextAvailableID = 0
@@ -19,7 +19,7 @@ class PARALLEL_HILL_CLIMBER:
 
     def Evolve(self,flag):
         self.Evaluate(self.parents,flag)
-        self.Get_Best()
+        self.Update_Fitness()
         for currentGeneration in range(c.numberOfGenerations):
             self.Evolve_For_One_Generation(flag)
 

@@ -84,6 +84,7 @@ class SOLUTION:
             rand = random.randint(0,5)
         if flag == 'control':
             if rand == 0: # add sensor neuron
+                print("here0")
                 i = 0
                 new_sensor = random.randint(0,self.numLinks - 1)
                 while self.sensors[new_sensor] == 1:
@@ -93,6 +94,7 @@ class SOLUTION:
                         break
                 self.sensors[new_sensor] = 1
             if rand == 1: # remove sensor neuron
+                print("here1")
                 if self.numSensorNeurons == 1:
                     return
                 i = 0
@@ -104,10 +106,12 @@ class SOLUTION:
                     curr_sensor = random.randint(0,self.numLinks - 1)
                 self.sensors[curr_sensor] = 0
             if rand == 2: # change link dimension
+                print("here2")
                 randlink = random.randint(1,self.numLinks - 1)
                 randdim = random.randint(0,2)
                 self.dims[randlink][randdim] = random.random()
             if rand == 3: # add link
+                print("here3")
                 randlink = random.randint(1,self.numLinks - 1)
                 self.dims.insert(randlink,[random.random(),random.random(),random.random()])
                 dir = random.randint(0,3)
@@ -136,6 +140,7 @@ class SOLUTION:
                 axis = str(jointAxes[0]) + " " + str(jointAxes[1]) + " " + str(jointAxes[2])
                 self.axes[motor] = axis
             if rand == 6: # remove link
+                print("here6")
                 randlink = random.randint(1,self.numLinks - 1)
                 del self.dims[randlink]
                 dir = random.randint(0,3)
