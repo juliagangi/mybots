@@ -9,9 +9,7 @@
 ## The Body
 My creature originates from a central link, with a fixed size, and has arms that grows out in at least 1 of the following directions: -x, +x, -y, and +y. As links are added, the z-coordinate is increased so links are connected at their edges, not faces. Each of the 4 arms contains a random number of links, constrained by [1,5], with the dimensions being constrained by [0,1]. The joint axis for each joint is randomly generated. 
 
-![alt text](https://github.com/juliagangi/mybots/blob/finalExperiment/botdiagram.png?raw=true)
-
-![alt text](https://github.com/juliagangi/mybots/blob/finalExperiment/bodydiagram.png?raw=true)
+![alt text](https://github.com/juliagangi/mybots/blob/finalExperiment/fullbody.png?raw=true)
 
 ## The Brain
 #### Control
