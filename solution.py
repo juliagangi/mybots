@@ -206,9 +206,10 @@ class SOLUTION:
                     for neuron in range(self.numHiddenNeurons):
                         self.mweights[motor+neuron] = 2*random.random() - 1    
                 else:
-                    sensor = random.randint(0,self.numSensorNeurons - 1)
-                    for neuron in range(self.numHiddenNeurons):
-                        self.sweights[sensor+neuron] = 2*random.random() - 1        
+                    if self.numSensorNeurons > 0:
+                        sensor = random.randint(0,self.numSensorNeurons - 1)
+                        for neuron in range(self.numHiddenNeurons):
+                            self.sweights[sensor+neuron] = 2*random.random() - 1        
             if rand == 5: # change random joint axis
                 motor = random.randint(0,self.numJoints - 1)
                 jointAxes = [random.randint(0,1), random.randint(0,1), random.randint(0,1)]  

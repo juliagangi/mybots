@@ -12,11 +12,13 @@ My creature originates from a central link, with a fixed size, and has arms that
 ## Experimental Robot #1
 The only difference between the control and the first experimental robot is that the number of links in each arm is constrained by [1,9] - the upper bound has been increased by 4. 
 
-![alt text](https://github.com/juliagangi/mybots/blob/finalExperiment/thebody.png?raw=true)
+![alt text](https://github.com/juliagangi/mybots/blob/finalExperiment/bodyydiagram.png?raw=true)
 
 ## The Brain
 #### Control & Experimental Robot #1
 Every link has a 3 in 5 chance of receiving a sensor neuron: if the integer randomly selected from [0,4] is greater than 1, a sensor neuron is placed in the given link. Every joint receives a motor neuron. To form the brain, every motor neuron is connected to the sensor neurons in adjoining links (if they exist). Each synapse is given a random weight, which is a floating point number constrained by [-1,1]. The total number of synapses is equal to twice the number of motor neurons (or joints).
+
+![alt text](https://github.com/juliagangi/mybots/blob/finalExperiment/braindiagram.png?raw=true)
 
 #### Experimental Robot #2
 The neural network of the creature I am testing is more complex than that of the control. The sensors and motors are placed in the same way, but a random number of hidden neurons, constrained by [2,4], are added to the robot. The synapses are completely different than in the control: one set is sent from each sensor neuron to each hidden neuron, and a second set is sent from each hidden neuron to each motor neuron. The total number of synapses is equal to numHiddenNeurons*numSensorNeurons + numHiddenNeurons*numMotorNeurons.
