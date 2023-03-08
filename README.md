@@ -50,11 +50,18 @@ In my code, there is an upper limit of 5 on the number of links in each arm. I h
 #### The Testing
 I tested my hypothesis with 3 different runs. Each run involved testing one version of the robot. Each of these involved a loop that occurred 5 times, with the random seed incremented each time, and each loop simulated a population size of 10 over 500 generations. For example, for the first run, the control was simulated (pop. 25, gens. 200) with random seed 1, 2, 3, 4, and finally 5. Next, experimental creature #1 was simulated with the same parameters and the same random seeds (1-5) to ensure that the populations were identical except for the longer limbs. Lastly, experimental creature #2 was simulated with the same parameters and seeds.
 
-#### The Result
-My experiment found great results, with the distance traveled from the origin doubling for some runs. The graphs below compare the control and mutated creature for each run. It can be observed from the legend that for each runs, the most successful creature for the mutated robot came from a different random seed than the control robot did.  
+#### The Results
+The results of my experiment confirmed my hypothesis, with the maximum distance traveled from the origin _______ for experiment #1 and __ for experiment #2. The graphs below compare the control and experimental creatures for each run. It can be observed from the legend that for each runs, the most successful creature for the mutated robot came from a different random seed than the control robot did.  
 
-###### The Graphs
 
+###### Control
+![alt text](https://github.com/juliagangi/mybots/blob/finalExperiment/plot1.png?raw=true)
+
+###### Experiment #1
+![alt text](https://github.com/juliagangi/mybots/blob/finalExperiment/plot2.png?raw=true)
+
+###### Experiment 2
+![alt text](https://github.com/juliagangi/mybots/blob/finalExperiment/plot3.png?raw=true)
 
 ## Running It
 First, clone my repo to your computer.
@@ -65,11 +72,27 @@ To watch a random robot, run this command:
 python3 run.py random
 ```
 
-To watch a final evolved robot, run this command:
+To watch a final evolved control robot, run this command:
 
 ```bash
-python3 run.py evolved
+python3 run.py control
 ```
+
+To watch the best evolved robot from experiment #1, run this command:
+
+```bash
+python3 run.py exp1
+```
+
+Or add an integer, 0-4, as an additional argument to view the best robot from that random seed.
+
+To watch the best evolved robot from experiment #2, run this command:
+
+```bash
+python3 run.py exp2
+```
+
+Or add an integer, 0-4 as an additional argument to view the best robot from that random seed.
 
 ## Videos
 
