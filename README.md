@@ -84,7 +84,7 @@ To watch the best evolved robot from experiment #1, run this command:
 python3 run.py exp1
 ```
 
-Or add an integer, 0-4, as an additional argument to view the best robot from that random seed.
+Or add an integer [1,5] as an additional argument to view the best robot from that random seed.
 
 To watch the best evolved robot from experiment #2, run this command:
 
@@ -92,7 +92,7 @@ To watch the best evolved robot from experiment #2, run this command:
 python3 run.py exp2
 ```
 
-Or add an integer, 0-4 as an additional argument to view the best robot from that random seed.
+Or add an integer [1,5] as an additional argument to view the best robot from that random seed.
 
 ## Videos
 
