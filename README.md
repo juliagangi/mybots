@@ -90,7 +90,7 @@ To watch the best evolved robot from experiment #2, run this command:
 ```bash
 python3 run.py exp2 optional:[1,5]*
 ```
-Add an optional 3rd argument, an integer [1,5], to see the best robot from that random seed.
+*Add an optional 3rd argument, an integer [1,5], to see the best robot from that random seed.
 
 ## Videos
 
