@@ -75,23 +75,24 @@ To watch a random robot, run this command:
 python3 run.py random
 ```
 
-To watch a final evolved control robot, run this command:
+To watch a the best evolved control robot, run this command:
 
 ```bash
-python3 run.py control
+python3 run.py control (optional:[1,5])
 ```
+Or add an integer [1,5] as an additional argument to view the best robot from that random seed.
 
 To watch the best evolved robot from experiment #1, run this command:
 
 ```bash
-python3 run.py exp1
+python3 run.py exp1 (optional:[1,5])
 ```
 Or add an integer [1,5] as an additional argument to view the best robot from that random seed.
 
 To watch the best evolved robot from experiment #2, run this command:
 
 ```bash
-python3 run.py exp2
+python3 run.py exp2 (optional:[1,5])
 ```
 Or add an integer [1,5] as an additional argument to view the best robot from that random seed.
 
