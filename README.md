@@ -51,8 +51,9 @@ In my control, there is an upper limit of 5 on the number of links in each arm. 
 I tested my hypothesis with 3 different runs. Each run involved testing one version of the robot. Each of these involved a loop that occurred 5 times, with the random seed incremented each time, and each loop simulated a population size of 10 over 500 generations. For example, for the first run, the control was simulated (pop. 25, gens. 200) with random seed 1, 2, 3, 4, and finally 5. Next, experiment #1 was simulated with the same parameters and the same random seeds (1-5) to ensure that the populations were identical except for the longer limbs. Lastly, experiment #2 was simulated with the same parameters and seeds.
 
 #### The Results
-The results of my experiment confirmed my hypothesis, with the maximum distance traveled from the origin _______ for experiment #1 and __ for experiment #2. The graphs below compare the control and experimental creatures for each run. It can be observed from the legend that for each runs, the most successful creature for the mutated robot came from a different random seed than the control robot did.  
+The results of my experiment confirmed my hypothesis, with the maximum distance traveled from the origin _______ for experiment #1 and __ for experiment #2. The graphs below compare the control and experimental creatures for each run. It can be observed from the legend that for the control, the most successful creature for the mutated robot came from a random seed 5, while for both experiments it came from random seed 1.
 
+For each random seed, I plotted the fittest parent at each generation. The mean curve is comprised of the average of the fitnesses of the best parent in each seed at each generation, and it includes at 95% confidence interval for these 5 fitness values. 
 
 ###### Control
 ![alt text](https://github.com/juliagangi/mybots/blob/finalExperiment/plot1.png?raw=true)
@@ -64,7 +65,9 @@ The results of my experiment confirmed my hypothesis, with the maximum distance 
 ![alt text](https://github.com/juliagangi/mybots/blob/finalExperiment/plot3.png?raw=true)
 
 ## Running It
-First, clone my repo to your computer.
+First, follow these instructions to install pybullet for python3: <https://www.reddit.com/r/ludobots/wiki/installation/> 
+
+Next, clone my repo to your computer.
 
 To watch a random robot, run this command:
 
@@ -83,7 +86,6 @@ To watch the best evolved robot from experiment #1, run this command:
 ```bash
 python3 run.py exp1
 ```
-
 Or add an integer [1,5] as an additional argument to view the best robot from that random seed.
 
 To watch the best evolved robot from experiment #2, run this command:
@@ -91,7 +93,6 @@ To watch the best evolved robot from experiment #2, run this command:
 ```bash
 python3 run.py exp2
 ```
-
 Or add an integer [1,5] as an additional argument to view the best robot from that random seed.
 
 ## Videos
