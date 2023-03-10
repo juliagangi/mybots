@@ -1,27 +1,37 @@
 # 396 Final Project
 
 #### Table of Contents
-###### 1. The Body
-###### 2. The Brain
-###### 3. Evolution
-###### 4. A/B Testing
+###### 1. The Robot
+###### 2. My Hypotheses
+###### 3. The Results
+###### 4. Discussion
+###### 5. Watch the robots!
 
-## The Control & Experiment #2
+## The Robot
+#### The Control
+###### The Body
 My creature originates from a central link, with a fixed size, and has arms that grows out in at least 1 of the following directions: -x, +x, -y, and +y. As links are added, the z-coordinate is increased so links are connected at their edges, not faces. Each of the 4 arms contains a random number of links, constrained by [1,5], with the dimensions being constrained by [0,1]. The joint axis for each joint is randomly generated. 
-
-## Experiment #1
-The only difference between the control and the first experiment is that the number of links in each arm is constrained by [1,9] - the upper bound has been increased by 4. 
 
 ![alt text](https://github.com/juliagangi/mybots/blob/finalExperiment/bodyydiagram.png?raw=true)
 
-## The Brain
-#### Control & Experiment #1
+###### The Brain
 Every link has a 3 in 5 chance of receiving a sensor neuron: if the integer randomly selected from [0,4] is greater than 1, a sensor neuron is placed in the given link. Every joint receives a motor neuron. To form the brain, every motor neuron is connected to the sensor neurons in adjoining links (if they exist). Each synapse is given a random weight, which is a floating point number constrained by [-1,1]. The total number of synapses is equal to twice the number of motor neurons (or joints).
 
 ![alt text](https://github.com/juliagangi/mybots/blob/finalExperiment/braindiagram.png?raw=true)
 
-#### Experiment #2
-The neural network of the creature I am testing is more complex than that of the control. The sensors and motors are placed in the same way, but a random number of hidden neurons, constrained by [2,4], are added to the robot. The synapses are completely different than in the control: one set is sent from each sensor neuron to each hidden neuron, and a second set is sent from each hidden neuron to each motor neuron. The total number of synapses is equal to numHiddenNeurons*numSensorNeurons + numHiddenNeurons*numMotorNeurons.
+## Experiment #1
+###### The Body
+The only difference between the control and the first experiment is that the number of links in each arm is constrained by [1,9] - the upper bound has been increased by 4. 
+
+###### The Brain
+The robot in experiment #1 has the same brain as the control robot.
+
+## Experiment #2 
+###### The Body
+The robot in experiment #2 has the same body as the control robot.
+
+###### The Brain
+The neural network of the creature in experiment #2 is more complex than that of the control. The sensors and motors are placed in the same way, but a random number of hidden neurons, constrained by [2,4], are added to the robot. The synapses are completely different than in the control: one set is sent from each sensor neuron to each hidden neuron, and a second set is sent from each hidden neuron to each motor neuron. The total number of synapses is equal to numHiddenNeurons*numSensorNeurons + numHiddenNeurons*numMotorNeurons.
 
 ![alt text](https://github.com/juliagangi/mybots/blob/finalExperiment/neuralnetwork.png?raw=true)
 
@@ -39,30 +49,35 @@ The fitness function calculates the straight-line displacement of the robot's ba
 #### Selection
 ![alt text](https://github.com/juliagangi/mybots/blob/finalExperiment/selection.png?raw=true)
 
-## A/B Testing
-#### My Hypotheses
-
+## My Hypotheses
 I hypothesized that increasing the upper bound on the number of links in the arms by 4 (experiment #1) would result in improved locomotion when compared to the control robot. I also hypothesized that adding a hidden neural network with 2 hidden neurons (experiment #2) would result in locomotion that is even better than the control group and the group with longer arms, which both have neural networks that contain only sensor and motor neurons. 
 
-###### Why?
-In my control, there is an upper limit of 5 on the number of links in each arm. I have noticed that the most successful creature at the end of every run is very elongated, as robots with longer limbs were selected for. I was curious as to whether increasing the upper limit on the length of the arms would or making a fundamental change in the brain (adding a hidden neural network) would improve locomotion to a greater degree.
+#### Why?
+In my control, there is an upper limit of 5 on the number of links in each arm. I have noticed that the most successful creature at the end of every run is very elongated, as robots with longer limbs were selected for. I was curious as to whether increasing the upper limit on the length of the arms to 9 would or making a fundamental change in the brain (adding a hidden neural network) would improve locomotion to a greater degree.
 
 #### The Testing
 I tested my hypothesis with 3 different runs. Each run involved testing one version of the robot. Each of these involved a loop that occurred 5 times, with the random seed incremented each time, and each loop simulated a population size of 10 over 500 generations. For example, for the first run, the control was simulated (pop. 25, gens. 200) with random seed 1, 2, 3, 4, and finally 5. Next, experiment #1 was simulated with the same parameters and the same random seeds (1-5) to ensure that the populations were identical except for the longer limbs. Lastly, experiment #2 was simulated with the same parameters and seeds.
 
-#### The Results
-The results of my experiment confirmed my hypothesis, with the maximum distance traveled from the origin being 38 (get decimal)for the control, 59.81 for experiment #1 and 75.7 for experiment #2. Each graph below shows the evolution that occurred during 1 run, over 500 generations. For each random seed, I plotted the highest fitness of the 10 parents at each generation. The mean curve is equal to the average of the 5 random seed curves, and it includes a 95% confidence interval for these 5 fitness values at each generation. It can be observed from the legend that for the control, the most successful creature for the mutated robot came from random seed 5, while for both experiments it came from random seed 1.
+## The Results
+The results of my experiment confirmed my hypothesis, with the maximum distance traveled from the origin being 38 (get decimal) for the control, 59.81 for experiment #1 and 75.7 for experiment #2. The experimental creatures were __% and __% fitter than the control, respectively, while the 2nd experimental creature was __% fitter than the first. Each graph below shows the evolution that occurred during 1 run, over 500 generations. For each random seed, I plotted the highest fitness of the 10 parents at each generation. The mean curve is equal to the average of the 5 random seed curves, and it includes a 95% confidence interval for these 5 fitness values at each generation. It can be observed from the legend that for the control, the most successful creature for the mutated robot came from random seed 5, while for both experiments it came from random seed 1.
 
-###### Control
+#### Control
 ![alt text](https://github.com/juliagangi/mybots/blob/finalExperiment/plot1.png?raw=true)
 
-###### Experiment #1
+#### Experiment #1
 ![alt text](https://github.com/juliagangi/mybots/blob/finalExperiment/plot2.png?raw=true)
 
-###### Experiment 2
+#### Experiment 2
 ![alt text](https://github.com/juliagangi/mybots/blob/finalExperiment/plot3.png?raw=true)
 
-## Running It
+## Discussion
+#### Additional Analysis
+#### Discussion of Results
+#### Conclusion
+###### Further Research
+
+## Watch the robots!
+#### Running it
 First, follow these instructions to install pybullet for python3: <https://www.reddit.com/r/ludobots/wiki/installation/> 
 
 Next, clone my repo to your computer.
@@ -93,11 +108,11 @@ python3 run.py exp2 optional:[1,5]*
 
 *Add a 3rd argument, an integer [1,5], to see the best robot from that random seed.
 
-## Videos
+#### Videos
 
 Click this link to watch a comparison between random and evolved creatures: <https://youtu.be/XodranJEfPs>
 
-## Credit
+#### Credit
 
 Credit goes to r/ludobots (<https://www.reddit.com/r/ludobots/>), Pyrosim, and CS 396: Artificial Life
 
