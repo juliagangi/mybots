@@ -110,7 +110,9 @@ python3 run.py exp2 optional:[1,5]*
 
 #### Videos
 
-Click this link to watch a comparison between random and evolved creatures: <https://youtu.be/XodranJEfPs>
+Click this link to watch a 10-second comparison between random and evolved creatures: <https://youtu.be/XodranJEfPs>
+
+Watch a 2-minute video on the project: <>
 
 #### Credit
 
