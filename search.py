@@ -25,12 +25,13 @@ for ind in range(c.numberOfGenerations+1):
     arra = [arrs[0][ind],arrs[1][ind],arrs[2][ind],arrs[3][ind],arrs[4][ind]]
     meanarr.append(np.mean(arra))
     ci = 1.96 * np.std(arra)/np.sqrt(5) 
-    plt.fill_between(ind,(meanarr-ci), (meanarr+ci), color='red', alpha=0.1)
+    plt.fill_between(ind,(np.mean(arra)-ci), (np.mean(arra)+ci), color='red', alpha=0.1)
+    #plt.fill_between(ind,(meanarr-ci), (meanarr+ci), color='red', alpha=0.1)
 plt.plot(meanarr, label="Mean", color='red', linewidth=2)
 plt.legend()
 plt.xlabel('Generation')
 plt.ylabel('Displacement')
-plt.title('Evolution: Control')
+plt.title('Evolution: Group A (Control)')
 plt.savefig('plot1')
 plt.cla()
 
@@ -53,12 +54,13 @@ for ind in range(c.numberOfGenerations+1):
     arra = [arrs[0][ind],arrs[1][ind],arrs[2][ind],arrs[3][ind],arrs[4][ind]]
     meanarr.append(np.mean(arra))
     ci = 1.96 * np.std(arra)/np.sqrt(5) 
-    plt.fill_between(ind,(meanarr-ci), (meanarr+ci), color='red', alpha=0.1)
+    plt.fill_between(ind,(np.mean(arra)-ci), (np.mean(arra)+ci), color='red', alpha=0.1)
+    #plt.fill_between(ind,(meanarr-ci), (meanarr+ci), color='red', alpha=0.1)
 plt.plot(meanarr, label="Mean", color='red', linewidth=2)
 plt.legend()
 plt.xlabel('Generation')
 plt.ylabel('Displacement')
-plt.title('Evolution: Experiment #1')
+plt.title('Evolution: Group B')
 plt.savefig('plot2')
 plt.cla()
 
@@ -80,12 +82,13 @@ for ind in range(c.numberOfGenerations+1):
     arra = [arrs[0][ind],arrs[1][ind],arrs[2][ind],arrs[3][ind],arrs[4][ind]]
     meanarr.append(np.mean(arra))
     ci = 1.96 * np.std(arra)/np.sqrt(5) 
-    plt.fill_between(ind,(meanarr-ci), (meanarr+ci), color='red', alpha=0.1)
+    plt.fill_between(ind,(np.mean(arra)-ci), (np.mean(arra)+ci), color='red', alpha=0.1)
+    #plt.fill_between(ind,(meanarr-ci), (meanarr+ci), color='red', alpha=0.1)
 plt.plot(meanarr, label="Mean", color='red', linewidth=2)
 plt.legend()
 plt.xlabel('Generation')
 plt.ylabel('Displacement')
-plt.title('Evolution: Experiment #2')
+plt.title('Evolution: Group C')
 plt.savefig('plot3')
 
 

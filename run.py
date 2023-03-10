@@ -8,7 +8,7 @@ from parallelHillClimber import PARALLEL_HILL_CLIMBER as phc
 
 if sys.argv[1] == 'random':
     solution.SOLUTION(0,5).Start_Simulation('GUI','control')
-elif sys.argv[1] == 'control':
+elif sys.argv[1] == 'A':
     try:
         num = sys.argv[2]
         file = open('pickle1_'+str(num),'rb')
@@ -28,7 +28,7 @@ elif sys.argv[1] == 'control':
         parents = [par1,par2,par3,par4,par5]
         p = phc(5)
         p.Show_Best(parents,'control')
-elif sys.argv[1] == 'exp1':
+elif sys.argv[1] == 'B':
     try:
         num = sys.argv[2]
         file = open('pickle2_'+str(num),'rb')
@@ -48,7 +48,7 @@ elif sys.argv[1] == 'exp1':
         parents = [par1,par2,par3,par4,par5]
         p = phc(10)
         p.Show_Best(parents,'control')
-elif sys.argv[1] == 'exp2':
+elif sys.argv[1] == 'C':
     try:
         num = sys.argv[2]
         file = open('pickle3_'+str(num),'rb')
