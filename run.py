@@ -13,7 +13,7 @@ elif sys.argv[1] == 'A':
         num = sys.argv[2]
         file = open('pickle1_'+str(num),'rb')
         par = pickle.load(file)
-        par.Start_Simulation("GUI",'control')
+        par.Start_Simulation("GUI",'A')
     except:
         file = open('pickle1_1', 'rb')
         par1 = pickle.load(file)
@@ -27,13 +27,13 @@ elif sys.argv[1] == 'A':
         par5 = pickle.load(file)
         parents = [par1,par2,par3,par4,par5]
         p = phc(5)
-        p.Show_Best(parents,'control')
+        p.Show_Best(parents,'A')
 elif sys.argv[1] == 'B':
     try:
         num = sys.argv[2]
         file = open('pickle2_'+str(num),'rb')
         par = pickle.load(file)
-        par.Start_Simulation("GUI",'control')
+        par.Start_Simulation("GUI",'B')
     except:
         file = open('pickle2_1', 'rb')
         par1 = pickle.load(file)
@@ -47,13 +47,13 @@ elif sys.argv[1] == 'B':
         par5 = pickle.load(file)
         parents = [par1,par2,par3,par4,par5]
         p = phc(10)
-        p.Show_Best(parents,'control')
+        p.Show_Best(parents,'B')
 elif sys.argv[1] == 'C':
     try:
         num = sys.argv[2]
         file = open('pickle3_'+str(num),'rb')
         par = pickle.load(file)
-        par.Start_Simulation("GUI",'notcontrol')
+        par.Start_Simulation("GUI",'C')
     except:
         file = open('pickle3_1', 'rb')
         par1 = pickle.load(file)
@@ -67,4 +67,4 @@ elif sys.argv[1] == 'C':
         par5 = pickle.load(file)
         parents = [par1,par2,par3,par4,par5]
         p = phc(5)
-        p.Show_Best(parents,'notcontrol')
+        p.Show_Best(parents,'C')

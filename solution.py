@@ -8,9 +8,7 @@ import constants as c
 
 class SOLUTION:
     def __init__(self,nextAvailableID,upperlimit):
-        #random.seed(nextAvailableID+1)
         self.myID = nextAvailableID
-        self.fitnessArray = []
         self.dirs = [['-x',0],['+x',0],['-y',0],['+y',0]]
         dirarray = [0,1,2,3]
         self.numLinks = 1 
@@ -82,7 +80,7 @@ class SOLUTION:
         rand = random.randint(0,6)
         if self.numLinks < 3:
             rand = random.randint(0,5)
-        if flag == 'control':
+        if flag == 'A' or flag == 'B':
             if rand == 0: # add sensor neuron
                 i = 0
                 new_sensor = random.randint(0,self.numLinks - 1)
@@ -325,7 +323,7 @@ class SOLUTION:
                 pyrosim.Send_Sensor_Neuron(name = i, linkName = str(i))
         j = 0
         i = i + 1
-        if flag == 'control':
+        if flag == 'A' or flag == 'B':
             for joint in self.joints:
                 pyrosim.Send_Motor_Neuron(name = i, jointName = joint)
                 split = joint.split('_')

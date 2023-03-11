@@ -2,7 +2,7 @@
 
 #### Table of Contents
 ###### 1. The Robot
-###### 2. My Hypotheses
+###### 2. The Hypotheses
 ###### 3. The Results
 ###### 4. Discussion
 ###### 5. Watch the robots!
@@ -15,7 +15,7 @@ My creature originates from a central link, with a fixed size, and has arms that
 ![alt text](https://github.com/juliagangi/mybots/blob/finalExperiment/bodyandcycle.png?raw=true)
 
 ###### The Brain
-Every link has a 3 in 5 chance of receiving a sensor neuron: if the integer randomly selected from [0,4] is greater than 1, a sensor neuron is placed in the given link. Every joint receives a motor neuron. To form the brain, every motor neuron is connected to the sensor neurons in adjoining links (if they exist). Each synapse is given a random weight, which is a floating point number constrained by [-1,1]. The total number of synapses is equal to twice the number of motor neurons (or joints).
+Every link has a 3 in 5 chance of receiving a sensor neuron: if the integer randomly selected from [0,4] is greater than 1, a sensor neuron is placed in the given link. Every joint receives a motor neuron. To form the brain, every motor neuron is connected to the sensor neurons in adjoining links (if they exist). An array is generated that assigns a random weight (a floating point number constrained by [-1,1]) to each synapse. The total number of synapses is equal to twice the number of motor neurons (or joints). 
 
 ![alt text](https://github.com/juliagangi/mybots/blob/finalExperiment/braindiagram.png?raw=true)
 
@@ -31,7 +31,7 @@ The robot in Group B has the same brain as the control robot.
 The robot in Group C has the same body as the control robot.
 
 ###### The Brain
-The neural network of the creature in Group C is more complex than that of the control. The sensors and motors are placed in the same way, but a random number of hidden neurons, constrained by [2,4], are added to the robot. The synapses are completely different than in the control: one set is sent from each sensor neuron to each hidden neuron, and a second set is sent from each hidden neuron to each motor neuron. The total number of synapses is equal to numHiddenNeurons*numSensorNeurons + numHiddenNeurons*numMotorNeurons.
+The neural network of the creature in Group C is more complex than that of the control. The sensors and motors are placed in the same way, but a random number of hidden neurons, constrained by [2,4], are added to the robot. The synapses are completely different than in the control: one set is sent from each sensor neuron to each hidden neuron, and a second set is sent from each hidden neuron to each motor neuron. One array is generated for each of the 2 sets of synapses, and it holds random floating point numbers constrained by [-1,1]. The total number of synapses is equal to numHiddenNeurons*numSensorNeurons + numHiddenNeurons*numMotorNeurons.
 
 ![alt text](https://github.com/juliagangi/mybots/blob/finalExperiment/neuralnetwork.png?raw=true)
 
@@ -49,8 +49,8 @@ The fitness function calculates the straight-line displacement of the robot's ba
 #### Selection
 ![alt text](https://github.com/juliagangi/mybots/blob/finalExperiment/selection.png?raw=true)
 
-## My Hypotheses
-I hypothesized that increasing the upper bound on the number of links in the arms by 4 (Group B) would result in improved locomotion when compared to the control robot (Group A). I also hypothesized that adding a hidden neural network with 2 hidden neurons (Group C) would result in locomotion that is even better than the control group and the group with longer arms, which both have neural networks that contain only sensor and motor neurons. 
+## The Hypotheses
+I hypothesized that increasing the upper bound on the number of links in the arms by 4 (Group B) would result in improved locomotion when compared to the control robot (Group A). I also hypothesized that adding a hidden neural network with 2 hidden neurons (Group C) would result in locomotion that is even better than the control group (Group A) and the group with longer arms (Group B). 
 
 #### Why?
 In my control, there is an upper limit of 5 on the number of links in each arm. I have noticed that the most successful creature at the end of every run is very elongated, as robots with longer limbs were selected for. I was curious as to whether increasing the upper limit on the length of the arms to 9 would or making a fundamental change in the brain (adding a hidden neural network) would improve locomotion to a greater degree.
@@ -59,7 +59,7 @@ In my control, there is an upper limit of 5 on the number of links in each arm. 
 I tested my hypothesis with 3 different runs. Each run involved testing one version of the robot. Each of these involved a loop that occurred 5 times, with the random seed incremented each time, and each loop simulated a population size of 10 over 500 generations. For the first run, the control was simulated (pop. 10, gens. 500) with random seed 1, 2, 3, 4, and finally 5. Next, Group B was simulated with the same parameters and the same random seeds (1-5) to ensure that the populations were identical except for the longer limbs. Lastly, Group C was simulated with the same parameters and seeds.
 
 ## The Results
-The results of my experiment confirmed my hypothesis, with the maximum distance traveled from the origin being 38 (get decimal) for Group A, 59.81 for Group B and 75.7 for Group C. The experimental creatures (B and C) were __% and __% fitter than the control, respectively, while the Group C creature was __% fitter than the first. Each graph below shows the evolution that occurred during 1 run, over 500 generations. For each random seed, I plotted the highest fitness of the 10 parents at each generation. The mean curve is equal to the average of the 5 random seed curves, and it includes a 95% confidence interval for these 5 fitness values at each generation. It can be observed from the legend that for the control, the most successful creature for the mutated robot came from random seed 5, while for groups B and C it came from random seed 1.
+The results of my experiment confirmed my hypotheses, with the maximum distance traveled from the origin being 38.19 for Group A, 59.81 for Group B and 75.7 for Group C - increasing with each group, as I predicted. The experimental creatures (B and C) were 56.6% and 98.2% fitter than the control, respectively, while the Group C creature was 26.6% fitter than the Group B creature. Each graph below shows the evolution that occurred during 1 run, over 500 generations. For each random seed, I plotted the highest fitness of the 10 parents at each generation. The mean curve is equal to the average of the 5 random seed curves, and it includes a 95% confidence interval for these 5 fitness values at each generation. It can be observed from the legend that for the control, the most successful creature for the mutated robot came from random seed 5, while for groups B and C it came from random seed 1.
 
 #### Group A
 ![alt text](https://github.com/juliagangi/mybots/blob/finalExperiment/plot1.png?raw=true)
@@ -72,9 +72,16 @@ The results of my experiment confirmed my hypothesis, with the maximum distance 
 
 ## Discussion
 #### Additional Analysis
+The main question I had throughout this experiment was why adding a hidden neural network affected such a drastic change in fitness. Hidden neural networks work by indirectly connecting sensor neurons to motor neurons (as contrasted with direct, single-synapse connections). They don't have a location, and use complex non-linear activation functions to the data. Hidden neurons are useful for training robots to accomplish complicated tasks, so it makes sense that they would be so successful with a relatively uncomplicated task: locomotion.
+
 #### Discussion of Results
+It makes sense that group B was more successful than group A because of the implications of having longer limbs. Robots with multiple shorter arms (such as group A, seed 1-4) are able to remain upright and tend to move by vibrating, which is still effective for locomotion but requires many small movements. Meanwhile robots with a main long arm (such as group B, seed 1) tend to topple over and make leaping strides, and locomotion consists of fewer, more impactful movements. I expected that using a hidden neural network in Group C would result in it being more successful than groups A and B, as I explaining in the previous section (Additional Analysis).
+
 #### Conclusion
+In conclusion, both of my hypotheses were correct. My first hypothesis, that robots with longer limbs would travel farther than robots with shorter limbs, was correct as a result of the differing body proportions that resulted from the bounds on the body parts. My second hypothesis, that robots with a hidden neural network would travel farther than robots with only sensor and motor neurons, was correct. This outcome requires more analysis, since hidden neural networks are still largely misunderstood. 
+
 ###### Further Research
+Further research could include seeing how the number of hidden neurons affects the success of the robot, and if there are diminishing returns as hidden neurons are added.
 
 ## Watch the robots!
 #### Running it
