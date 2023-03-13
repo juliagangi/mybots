@@ -26,7 +26,7 @@ elif sys.argv[1] == 'A':
         file = open('pickle1_5', 'rb')
         par5 = pickle.load(file)
         parents = [par1,par2,par3,par4,par5]
-        p = phc(5)
+        p = phc(5,0)
         p.Show_Best(parents,'A')
 elif sys.argv[1] == 'B':
     try:
@@ -46,7 +46,7 @@ elif sys.argv[1] == 'B':
         file = open('pickle2_5', 'rb')
         par5 = pickle.load(file)
         parents = [par1,par2,par3,par4,par5]
-        p = phc(10)
+        p = phc(10,0)
         p.Show_Best(parents,'B')
 elif sys.argv[1] == 'C':
     try:
@@ -66,5 +66,5 @@ elif sys.argv[1] == 'C':
         file = open('pickle3_5', 'rb')
         par5 = pickle.load(file)
         parents = [par1,par2,par3,par4,par5]
-        p = phc(5)
+        p = phc(5,0)
         p.Show_Best(parents,'C')

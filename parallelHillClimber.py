@@ -4,12 +4,14 @@ import copy
 import os
 import numpy
 import matplotlib.pyplot as plt
+import pickle
 
 class PARALLEL_HILL_CLIMBER:
-    def __init__(self,upperlimit):
+    def __init__(self,upperlimit,myseed):
         os.system("rm brain/brain*.nndf")
         os.system("rm fitness/fitness*.txt")
         os.system("rm body/body*.urdf")
+        self.myseed = myseed
         self.parents = {}
         self.nextAvailableID = 0
         self.fitnessArr = []
@@ -17,11 +19,16 @@ class PARALLEL_HILL_CLIMBER:
             self.parents[i] = SOLUTION(self.nextAvailableID,upperlimit)
             self.nextAvailableID = self.nextAvailableID + 1
 
-    def Evolve(self,flag):
+    def Evolve(self,flag,seed):
         self.Evaluate(self.parents,flag)
         self.Update_Fitness()
         for currentGeneration in range(c.numberOfGenerations):
             self.Evolve_For_One_Generation(flag)
+            if seed == self.myseed and (currentGeneration+1) % 100 == 0:
+                file = open('pickle_'+flag+'_'+str(currentGeneration+1), 'wb')
+                currbest = self.Best_Parent()
+                pickle.dump(currbest,file)
+                
 
     def Evolve_For_One_Generation(self,flag):
         self.Spawn()
@@ -53,7 +60,7 @@ class PARALLEL_HILL_CLIMBER:
         for parent in self.parents:
             if self.children[parent].fitness > self.parents[parent].fitness:
                 self.parents[parent] = self.children[parent]
-            self.parents[parent].fitnessArray.append(self.parents[parent].fitness)
+            #self.parents[parent].fitnessArr.append(self.parents[parent].fitness)
 
     def Plot(self):
         for parent in self.parents:

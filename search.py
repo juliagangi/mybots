@@ -11,8 +11,8 @@ arrs = []
 best1 = []
 for i in range(5):
     random.seed(i+1)
-    phc = PARALLEL_HILL_CLIMBER(5)
-    phc.Evolve('A')
+    phc = PARALLEL_HILL_CLIMBER(5,i+1)
+    phc.Evolve('A',5)
     plt.plot(phc.fitnessArr, label=str(i+1), color=colors[i], linewidth=1)
     x = np.arange(0,c.numberOfGenerations+1,1)
     bestpar = phc.Best_Parent()
@@ -39,8 +39,8 @@ arrs = []
 best2 = []
 for i in range(5):
     random.seed(i+1)
-    phc = PARALLEL_HILL_CLIMBER(9)
-    phc.Evolve('B')
+    phc = PARALLEL_HILL_CLIMBER(9,i+1)
+    phc.Evolve('B',1)
     plt.plot(phc.fitnessArr, label=str(i+1), color=colors[i], linewidth=1)
     x = np.arange(0,c.numberOfGenerations+1,1)
     bestpar = phc.Best_Parent()
@@ -66,8 +66,8 @@ best3 = []
 arrs = []
 for i in range(5):
     random.seed(i+1)
-    phc = PARALLEL_HILL_CLIMBER(5)
-    phc.Evolve('C')
+    phc = PARALLEL_HILL_CLIMBER(5,i+1)
+    phc.Evolve('C',1)
     plt.plot(phc.fitnessArr, label=str(i+1), color=colors[i], linewidth=1)
     x = np.arange(0,c.numberOfGenerations+1,1)
     bestpar = phc.Best_Parent()
