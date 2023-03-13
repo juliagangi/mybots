@@ -24,10 +24,10 @@ class PARALLEL_HILL_CLIMBER:
         self.Update_Fitness()
         for currentGeneration in range(c.numberOfGenerations):
             self.Evolve_For_One_Generation(flag)
-            if seed == self.myseed and (currentGeneration+1) % 100 == 0:
-                file = open('pickle_'+flag+'_'+str(currentGeneration+1), 'wb')
-                currbest = self.Best_Parent()
-                pickle.dump(currbest,file)
+            #if seed == self.myseed and (currentGeneration+1) % 100 == 0:
+                #file = open('pickle_'+flag+'_'+str(currentGeneration+1), 'wb')
+                #currbest = self.Best_Parent()
+                #pickle.dump(currbest,file)
                 
 
     def Evolve_For_One_Generation(self,flag):
@@ -55,6 +55,8 @@ class PARALLEL_HILL_CLIMBER:
             solutions[parent].Start_Simulation("DIRECT",flag)
         for parent in solutions:
             solutions[parent].Wait_For_Simulation_To_End()
+        file = open('pickle_'+flag+'_0', 'wb')
+        pickle.dump(solutions[6],file)
 
     def Select(self):
         for parent in self.parents:
