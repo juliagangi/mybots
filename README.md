@@ -35,7 +35,7 @@ The robot in Group C has the same body as the control robot.
 ###### The Brain
 The neural network of the creature in Group C is more complex than that of the control. The sensors and motors are placed in the same way, but a random number of hidden neurons, constrained by [2,4], are added to the robot. The synapses are completely different than in the control: one set is sent from each sensor neuron to each hidden neuron, and a second set is sent from each hidden neuron to each motor neuron. One array is generated for each of the 2 sets of synapses, and it holds random floating point numbers constrained by [-1,1]. The total number of synapses is equal to numHiddenNeurons*numSensorNeurons + numHiddenNeurons*numMotorNeurons.
 
-![alt text](https://github.com/juliagangi/mybots/blob/finalExperiment/neuralnetwork.png?raw=true)
+![alt text](https://github.com/juliagangi/mybots/blob/finalExperiment/neuraldiff.png?raw=true)
 
 ## Evolution
 The body shape influences the behavior of the robot. A robot with symmetrical arms is more likely to move in a constant direction, while a robot where the arms don't all have arms opposite themselves may be more likely to move in a curved trajectory. Furthermore, a robot with longer arms is more likely to topple over and move on its side, while a robot with shorter arms may remain upright while moving.
