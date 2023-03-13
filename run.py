@@ -6,20 +6,6 @@ import pickle
 import constants as c
 from parallelHillClimber import PARALLEL_HILL_CLIMBER as phc
 
-file = open('pickle_A_0','rb')
-par = pickle.load(file)
-par.Start_Simulation("GUI",'A')
-exit()
-file = open('pickle_B_0','rb')
-par = pickle.load(file)
-par.Start_Simulation("GUI",'B')
-
-
-file = open('pickle_C_0','rb')
-par = pickle.load(file)
-par.Start_Simulation("GUI",'C')
-
-
 if sys.argv[1] == 'random':
     solution.SOLUTION(0,5).Start_Simulation('GUI','control')
 elif sys.argv[1] == 'A':
