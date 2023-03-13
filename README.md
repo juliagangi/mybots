@@ -23,6 +23,8 @@ Every link has a 3 in 5 chance of receiving a sensor neuron: if the integer rand
 ###### The Body
 The only difference between the robots in the control and in Group B is that the number of links in each arm is constrained by [1,9] - the upper bound has been increased by 4. 
 
+![alt text](https://github.com/juliagangi/mybots/blob/finalExperiment/bodydiff.png?raw=true)
+
 ###### The Brain
 The robot in Group B has the same brain as the control robot.
 
@@ -32,8 +34,6 @@ The robot in Group C has the same body as the control robot.
 
 ###### The Brain
 The neural network of the creature in Group C is more complex than that of the control. The sensors and motors are placed in the same way, but a random number of hidden neurons, constrained by [2,4], are added to the robot. The synapses are completely different than in the control: one set is sent from each sensor neuron to each hidden neuron, and a second set is sent from each hidden neuron to each motor neuron. One array is generated for each of the 2 sets of synapses, and it holds random floating point numbers constrained by [-1,1]. The total number of synapses is equal to numHiddenNeurons*numSensorNeurons + numHiddenNeurons*numMotorNeurons.
-
-![alt text](https://github.com/juliagangi/mybots/blob/finalExperiment/bodydiff.png?raw=true)
 
 ![alt text](https://github.com/juliagangi/mybots/blob/finalExperiment/neuralnetwork.png?raw=true)
 
