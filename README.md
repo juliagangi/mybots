@@ -48,7 +48,7 @@ There are 7 possible mutations, all with an equal chance of occurring. First, a 
 #### Fitness 
 The fitness function calculates the straight-line displacement of the robot's base from (0,0) on the xy plane. It takes the square root of the squared x- and y-components of its location. A robot with a higher displacement has a higher fitness and will be selected for.
 
-<img src = "https://latex.codecogs.com/svg.image?fitness&space;=&space;\sqrt[]{x^{2}&space;&plus;&space;y^{2}}"/>
+<img src="https://latex.codecogs.com/svg.image?fitness&space;=&space;\sqrt[]{x^2&plus;y^2}" title="\Large fitness = \sqrt[]{x^2+y^2}" />
 
 #### Selection
 ![alt text](https://github.com/juliagangi/mybots/blob/finalExperiment/selection.png?raw=true)
@@ -67,15 +67,18 @@ The results of my experiment supported my hypotheses, with the maximum distance 
 
 #### Group A
 ![alt text](https://github.com/juliagangi/mybots/blob/finalExperiment/plot1.png?raw=true)
-A few mutations caused seed 5 maximum fitness to increase from about 3 to about 30 in the first 20 generations, so seed 5 was the fittest for the majority of the experiment. However, seeds 1-4 still saw improvement over the first 100 generations, and a flattening of curves after that.
+
+###### A few mutations caused seed 5 maximum fitness to increase from about 3 to about 30 in the first 20 generations, so seed 5 was the fittest for the majority of the experiment. However, seeds 1-4 still saw improvement over the first 100 generations, and a flattening of curves after that.
 
 #### Group B
 ![alt text](https://github.com/juliagangi/mybots/blob/finalExperiment/plot2.png?raw=true)
-In the first 100 generations, evolution improved at a fairly high rate, with seed 4 being the fittest, but around generation 130 a single mutation occurred that caused seed 1's maximum displacement to increase from about 12 to about 35, while the rest of the seeds' curves remained fairly flat. 
+
+###### In the first 100 generations, evolution improved at a fairly high rate, with seed 4 being the fittest, but around generation 130 a single mutation occurred that caused seed 1's maximum displacement to increase from about 12 to about 35, while the rest of the seeds' curves remained fairly flat. 
 
 #### Group C
 ![alt text](https://github.com/juliagangi/mybots/blob/finalExperiment/plot3.png?raw=true)
-You can observe that the most successful creature went back and forth between seeds 1 and 3 until after the 200th generation, when it remained as seed 1. Most of the seeds still saw continuous growth throughout all 500 generations.
+
+###### You can observe that the most successful creature went back and forth between seeds 1 and 3 until after the 200th generation, when it remained as seed 1. Most of the seeds still saw continuous growth throughout all 500 generations.
 
 ## Discussion
 #### Additional Analysis
