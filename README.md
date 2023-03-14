@@ -70,12 +70,12 @@ The results of my experiment supported my hypotheses, with the maximum distance 
 #### Group A
 ![alt text](https://github.com/juliagangi/mybots/blob/finalExperiment/plot1.png?raw=true)
 
-###### A few mutations caused seed 5 maximum fitness to increase from about 3 to about 30 in the first 20 generations, so seed 5 was the fittest for the majority of the experiment. However, seeds 1-4 still saw improvement over the first 100 generations, and a flattening of curves after that.
+A few mutations caused seed 5's maximum fitness to increase from about 3 to about 30 in the first 20 generations, so seed 5 was the fittest for the majority of the experiment. However, seeds 1-4 still saw improvement over the first 100 generations and around generation 300.
 
 #### Group B
 ![alt text](https://github.com/juliagangi/mybots/blob/finalExperiment/plot2.png?raw=true)
 
-###### In the first 100 generations, evolution improved at a fairly high rate, with seed 4 being the fittest, but around generation 130 a single mutation occurred that caused seed 1's maximum displacement to increase from about 12 to about 35, while the rest of the seeds' curves remained fairly flat. 
+In the first 100 generations, evolution improved at a fairly high rate, with seed 4 being the fittest, but around generation 130 a single mutation occurred that caused seed 1's maximum displacement to increase from about 12 to about 35, while the rest of the seeds' curves remained fairly flat, with the exception of a surge in seeds 3 and 4 approaching generation 500.
 
 #### Group C
 ![alt text](https://github.com/juliagangi/mybots/blob/finalExperiment/plot3.png?raw=true)
