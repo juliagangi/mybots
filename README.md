@@ -48,7 +48,9 @@ There are 7 possible mutations, all with an equal chance of occurring. First, a 
 #### Fitness 
 The fitness function calculates the straight-line displacement of the robot's base from (0,0) on the xy plane. It takes the square root of the squared x- and y-components of its location. A robot with a higher displacement has a higher fitness and will be selected for.
 
-<img src="https://latex.codecogs.com/svg.image?fitness&space;=&space;\sqrt[]{x^2&plus;y^2}" title="\Large fitness = \sqrt[]{x^2+y^2}" />
+```math
+fitness^2 = x^2+y^2
+```
 
 #### Selection
 ![alt text](https://github.com/juliagangi/mybots/blob/finalExperiment/selection.png?raw=true)
