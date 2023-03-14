@@ -131,9 +131,9 @@ python3 run.py C optional:[1,5]*
 
 #### Videos
 
-Click this link to watch a 10-second comparison between random and evolved creatures: <https://youtu.be/PnveOMKyw64>
+Watch a 10-second comparison between random and evolved creatures: <https://youtu.be/PnveOMKyw64>
 
-Watch a 2-minute video on my project: <https://youtu.be/I-xyw5SuYvg>
+Watch a 2-minute video on my project: <https://youtu.be/n8CRFX7OWX0>
 
 #### Credit
 
