@@ -80,7 +80,7 @@ The results of my experiment supported my hypotheses, with the maximum distance 
 #### Group C
 ![alt text](https://github.com/juliagangi/mybots/blob/finalExperiment/plot3.png?raw=true)
 
-###### You can observe that the most successful creature went back and forth between seeds 1 and 3 until after the 200th generation, when it remained as seed 1. Most of the seeds still saw continuous growth throughout all 500 generations.
+You can observe that the most successful creature alternated between seeds 1 and 3 until after the 200th generation, when it remained as seed 1. Most of the seeds still saw continuous growth throughout all 500 generations.
 
 ## Discussion
 #### Additional Analysis
