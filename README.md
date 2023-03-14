@@ -12,7 +12,7 @@
 ###### The Body
 My creature originates from a central link, with a fixed size, and has arms that grows out in at least 1 of the following directions: -x, +x, -y, and +y. As links are added, the z-coordinate is increased so links are connected at their edges, not faces. Each of the 4 arms contains a random number of links, constrained by [1,5], with the dimensions being constrained by [0,1]. The joint axis for each joint is randomly generated. 
 
-![alt text](https://github.com/juliagangi/mybots/blob/finalExperiment/bodyandcycle.png?raw=true)
+![alt text](https://github.com/juliagangi/mybots/blob/finalExperiment/cyclebody.png?raw=true)
 
 ###### The Brain
 Every link has a 3 in 5 chance of receiving a sensor neuron: if the integer randomly selected from [0,4] is greater than 1, a sensor neuron is placed in the given link. Every joint receives a motor neuron. To form the brain, every motor neuron is connected to the sensor neurons in adjoining links (if they exist). An array is generated that assigns a random weight (a floating point number constrained by [-1,1]) to each synapse. The total number of synapses is equal to twice the number of motor neurons (or joints). 
@@ -22,6 +22,8 @@ Every link has a 3 in 5 chance of receiving a sensor neuron: if the integer rand
 ## Group B
 ###### The Body
 The only difference between the robots in the control and in Group B is that the number of links in each arm is constrained by [1,9] - the upper bound has been increased by 4. 
+
+![alt text](https://github.com/juliagangi/mybots/blob/finalExperiment/cyclebodyB.png?raw=true)
 
 ![alt text](https://github.com/juliagangi/mybots/blob/finalExperiment/bodydiff.png?raw=true)
 
