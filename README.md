@@ -86,7 +86,7 @@ You can observe that the most successful creature alternated between seeds 1 and
 
 ## Discussion
 #### Additional Analysis
-The main question I had throughout this experiment was why adding a hidden neural network affected such a drastic change in fitness. Hidden neural networks work by indirectly connecting sensor neurons to motor neurons (as contrasted with direct, single-synapse connections). They don't have a location, and apply complex non-linear activation functions to the data. Hidden neurons are useful for training robots to accomplish complicated tasks, so it makes sense that they would be so successful with a relatively uncomplicated task: locomotion.
+The main question I had throughout this experiment was why adding a hidden neural network affected such a drastic change in fitness. Hidden neural networks work by indirectly connecting sensor neurons to motor neurons (as contrasted with direct, single-synapse connections). They don't have a location, and apply complex non-linear activation functions to the data (<https://www.baeldung.com/cs/hidden-layers-neural-network>). Hidden neurons are useful for training robots to accomplish complicated tasks, so it makes sense that they would be so successful with a relatively uncomplicated task: locomotion.
 
 #### Discussion of Results
 It makes sense that group B was more successful than group A because of the implications of having longer limbs. Robots with multiple shorter arms (such as group A, seed 1-4) are able to remain upright and tend to move by vibrating, which is still effective for locomotion but requires many small movements. Meanwhile robots with a main long arm (such as group B, seed 1) tend to topple over and make leaping strides, and locomotion consists of fewer, more impactful movements. The longer the arm is, the more they bend, so the result is longer strides. Additionally, I expected that using a hidden neural network in Group C would result in it being more successful than groups A and B, as I explain in the previous section (Additional Analysis).
@@ -133,7 +133,7 @@ python3 run.py C optional:[1,5]*
 
 Click this link to watch a 10-second comparison between random and evolved creatures: <https://youtu.be/PnveOMKyw64>
 
-Watch a 2-minute video on my project: <>
+Watch a 2-minute video on my project: <https://youtu.be/I-xyw5SuYvg>
 
 #### Credit
 
