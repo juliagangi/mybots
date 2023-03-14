@@ -7,34 +7,34 @@ import constants as c
 from parallelHillClimber import PARALLEL_HILL_CLIMBER as phc
 
 if sys.argv[1] == 'random':
-    solution.SOLUTION(0,5).Start_Simulation('GUI','control')
+    solution.SOLUTION(0,5).Start_Simulation('GUI','A')
 elif sys.argv[1] == 'A':
     try:
         num = sys.argv[2]
-        file = open('pickle1_'+str(num),'rb')
+        file = open('pickles/pickle1_'+str(num),'rb')
         par = pickle.load(file)
         par.Start_Simulation("GUI",'A')
     except:
-        file = open('pickle1_5', 'rb')
+        file = open('pickles/pickle1_5', 'rb')
         par5 = pickle.load(file)
         par5.Start_Simulation("GUI",'A')
 elif sys.argv[1] == 'B':
     try:
         num = sys.argv[2]
-        file = open('pickle2_'+str(num),'rb')
+        file = open('pickles/pickle2_'+str(num),'rb')
         par = pickle.load(file)
         par.Start_Simulation("GUI",'B')
     except:
-        file = open('pickle2_1', 'rb')
+        file = open('pickles/pickle2_1', 'rb')
         par1 = pickle.load(file)
         par1.Start_Simulation("GUI",'B')
 elif sys.argv[1] == 'C':
     try:
         num = sys.argv[2]
-        file = open('pickle3_'+str(num),'rb')
+        file = open('pickles/pickle3_'+str(num),'rb')
         par = pickle.load(file)
         par.Start_Simulation("GUI",'C')
     except:
-        file = open('pickle3_1', 'rb')
+        file = open('pickles/pickle3_1', 'rb')
         par1 = pickle.load(file)
         par1.Start_Simulation("GUI",'C')

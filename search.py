@@ -17,7 +17,7 @@ for i in range(5):
     x = np.arange(0,c.numberOfGenerations+1,1)
     bestpar = phc.Best_Parent()
     best1.append(bestpar)
-    file = open('pickle1_'+str(i+1), 'wb')
+    file = open('pickles/pickle1_'+str(i+1), 'wb')
     pickle.dump(bestpar,file)
     arrs.append(phc.fitnessArr)
 meanarr = []
@@ -31,7 +31,7 @@ plt.legend()
 plt.xlabel('Generation')
 plt.ylabel('Displacement')
 plt.title('Evolution: Group A (Control)')
-plt.savefig('plot1')
+plt.savefig('diagrams/plot1')
 plt.cla()
 
 
@@ -45,7 +45,7 @@ for i in range(5):
     x = np.arange(0,c.numberOfGenerations+1,1)
     bestpar = phc.Best_Parent()
     best2.append(bestpar)
-    file = open('pickle2_'+str(i+1), 'wb')
+    file = open('pickles/pickle2_'+str(i+1), 'wb')
     pickle.dump(bestpar,file)
     arrs.append(phc.fitnessArr)
 meanarr = []
@@ -59,7 +59,7 @@ plt.legend()
 plt.xlabel('Generation')
 plt.ylabel('Displacement')
 plt.title('Evolution: Group B')
-plt.savefig('plot2')
+plt.savefig('diagrams/plot2')
 plt.cla()
 
 best3 = []
@@ -72,7 +72,7 @@ for i in range(5):
     x = np.arange(0,c.numberOfGenerations+1,1)
     bestpar = phc.Best_Parent()
     best3.append(bestpar)
-    file = open('pickle3_'+str(i+1), 'wb')
+    file = open('pickles/pickle3_'+str(i+1), 'wb')
     pickle.dump(bestpar,file)
     arrs.append(phc.fitnessArr)
 meanarr = []
@@ -86,7 +86,7 @@ plt.legend()
 plt.xlabel('Generation')
 plt.ylabel('Displacement')
 plt.title('Evolution: Group C')
-plt.savefig('plot3')
+plt.savefig('diagrams/plot3')
 
 
 input("Press Enter to Continue")
